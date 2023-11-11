@@ -69,29 +69,3 @@ class _WelcomePageState extends State<WelcomePage> {
    );
   }
 }
-
-// class _HomePageBody extends StatelessWidget {
-
-//   final int currentIndex;
-
-//   const _HomePageBody({super.key, required this.currentIndex});
-
-//   @override
-//   Widget build(BuildContext context) {
-    
-
-//     switch (currentIndex) {
-//       case 0:
-//         return Card1();
-
-//       case 1:
-//         return Card2();
-
-//       case 2:
-//         return Card3();
-
-//       default:
-//         return Card1();
-//     }
-//   }
-// }

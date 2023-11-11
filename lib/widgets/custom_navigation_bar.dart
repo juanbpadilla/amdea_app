@@ -14,7 +14,7 @@ class CustomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
-      height: 200,
+      height: 150,
       alignment: Alignment.center,
       child: Column(
         children: [
@@ -58,7 +58,7 @@ class _NavigationItems extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
-      padding: const EdgeInsets.only( left: 90, right: 90, bottom: 30 ),
+      padding: const EdgeInsets.only( left: 90, right: 90, bottom: 0 ),
     
       child: BottomNavigationBar(
         onTap: (int i) => navigateToPage(i),
