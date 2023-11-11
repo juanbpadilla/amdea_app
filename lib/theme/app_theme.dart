@@ -28,14 +28,14 @@ class AppTheme {
         
         titleLarge: TextStyle(
           fontFamily: 'Montserrat_Bold',
-          fontSize: 40,
+          fontSize: 38,
           color: secondary,
         ),
 
         bodyMedium: TextStyle(
           fontFamily: 'Monserrat',
             color: AppTheme.secondary,
-            fontSize: 25,
+            fontSize: 22,
             fontWeight: FontWeight.w400
         )
       ),
