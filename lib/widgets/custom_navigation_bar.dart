@@ -5,16 +5,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomNavigationBar extends StatelessWidget {
 
+  final int currentPage;
+  final Function(int) navigateToPage;
+
+  const CustomNavigationBar({super.key, required this.currentPage, required this.navigateToPage});
+
   @override
   Widget build(BuildContext context) {
+
     return Container(
       height: 200,
       alignment: Alignment.center,
       child: Column(
         children: [
-          const _NavigationItems(),
+          _NavigationItems(currentPage: currentPage, navigateToPage: navigateToPage),
     
-          Center(
+          const Center(
             child: Row(
               children: [
           
@@ -39,23 +45,33 @@ class CustomNavigationBar extends StatelessWidget {
 }
 
 class _NavigationItems extends StatelessWidget {
-  const _NavigationItems({
-    super.key,
-  });
 
+  final int currentPage;
+  final Function(int) navigateToPage;
+
+  const _NavigationItems({
+    required this.currentPage, 
+    required this.navigateToPage
+  });
+  
   @override
   Widget build(BuildContext context) {
+
     return Container(
       padding: const EdgeInsets.only( left: 90, right: 90, bottom: 30 ),
     
       child: BottomNavigationBar(
+        onTap: (int i) => navigateToPage(i),
+        currentIndex: currentPage,
         elevation: 0,
         items: [
       
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/icons/rectangle.svg',
-              colorFilter: const ColorFilter.mode(Color(0xFFA6A6A6), BlendMode.srcIn),
+              colorFilter: currentPage == 0 
+                ? const ColorFilter.mode(AppTheme.primary, BlendMode.srcIn)
+                : const ColorFilter.mode(AppTheme.secondary, BlendMode.srcIn),
             ),
             label: ''
           ),
@@ -63,7 +79,9 @@ class _NavigationItems extends StatelessWidget {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/icons/rectangle.svg',
-              colorFilter: const ColorFilter.mode(Color(0xFFA6A6A6), BlendMode.srcIn),
+              colorFilter: currentPage == 1 
+                ? const ColorFilter.mode(AppTheme.primary, BlendMode.srcIn)
+                : const ColorFilter.mode(AppTheme.secondary, BlendMode.srcIn),
             ),
             label: ''
           ),
@@ -71,7 +89,9 @@ class _NavigationItems extends StatelessWidget {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/icons/rectangle.svg',
-              colorFilter: const ColorFilter.mode(Color(0xFFA6A6A6), BlendMode.srcIn),
+              colorFilter: currentPage == 2 
+                ? const ColorFilter.mode(AppTheme.primary, BlendMode.srcIn)
+                : const ColorFilter.mode(AppTheme.secondary, BlendMode.srcIn),
             ),
             label: ''
           ),

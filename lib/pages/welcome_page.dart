@@ -2,42 +2,96 @@ import 'package:amdea_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
+
+  @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
+
+  late PageController _pageController;
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _currentPage);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _navigateToPage(int pageIndex) {
+    _pageController.animateToPage(
+      pageIndex,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+    setState(() {
+      _currentPage = pageIndex;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    // final uiProvider = Provider.of<UiProvider>(context);
+
+    // int currentIndex = uiProvider.selectedMenuOpt;
+
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: _HomePageBody(),
+        child: PageView(
+          physics: const BouncingScrollPhysics(),
+
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _currentPage = index;
+            });
+          },
+
+          children: const [
+            Card1(),
+            Card2(),
+            Card3(),
+          ],
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar()
+      bottomNavigationBar: CustomNavigationBar(
+        currentPage: _currentPage,
+        navigateToPage: _navigateToPage,
+      )
    );
   }
 }
 
-class _HomePageBody extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // final uiProvider = Provider.of<UiProvider>(context);
+// class _HomePageBody extends StatelessWidget {
 
-    // final currentIndex = uiProvider.selectedMenuOpt;
+//   final int currentIndex;
 
-    switch (2) {
-      case 0:
-        return Card1();
+//   const _HomePageBody({super.key, required this.currentIndex});
 
-      case 1:
-        return Card2();
+//   @override
+//   Widget build(BuildContext context) {
+    
 
-      case 2:
-        return Card3();
+//     switch (currentIndex) {
+//       case 0:
+//         return Card1();
 
-      default:
-        return Card1();
-    }
-  }
-}
+//       case 1:
+//         return Card2();
+
+//       case 2:
+//         return Card3();
+
+//       default:
+//         return Card1();
+//     }
+//   }
+// }
