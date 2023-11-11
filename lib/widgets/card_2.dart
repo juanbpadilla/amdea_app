@@ -6,18 +6,20 @@ class Card2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const WallperCard(),
-          Text('¡Descubre las herramientas!', style: Theme.of(context).textTheme.titleLarge),
-          Text(
-            'Crea y transmite una comunicacion visual a travez del diseño grafico publicitario.',
-            style: Theme.of(context).textTheme.bodyMedium
-          ),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const WallperCard(),
+            Text('¡Descubre las herramientas!', style: Theme.of(context).textTheme.titleLarge),
+            Text(
+              'Crea y transmite una comunicacion visual a travez del diseño grafico publicitario.',
+              style: Theme.of(context).textTheme.bodyMedium
+            ),
+          ],
+        ),
       ),
     );
   }
