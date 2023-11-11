@@ -16,6 +16,9 @@ class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    void NavigateTo() => Navigator.pushNamed(context, 'login');
+    void _Exit() => exit(0);
+
     return Container(
       height: 150,
       alignment: Alignment.center,
