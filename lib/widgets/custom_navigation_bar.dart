@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:amdea_app/theme/app_theme.dart';
 import 'package:amdea_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +12,12 @@ class CustomNavigationBar extends StatelessWidget {
 
   const CustomNavigationBar({super.key, required this.currentPage, required this.navigateToPage});
 
+
   @override
   Widget build(BuildContext context) {
+
+    void NavigateTo() => Navigator.pushNamed(context, 'login');
+    void _Exit() => exit(0);
 
     return Container(
       height: 150,
@@ -20,17 +26,19 @@ class CustomNavigationBar extends StatelessWidget {
         children: [
           _NavigationItems(currentPage: currentPage, navigateToPage: navigateToPage),
     
-          const Center(
+          Center(
             child: Row(
               children: [
           
                 Expanded(child: CustomButton(
                   text: 'Iniciar Sesión',
+                  routeName: NavigateTo,
                   color: AppTheme.primary,
                 )),
                 
                 Expanded(child: CustomButton(
                   text: 'Salir',
+                  routeName: _Exit,
                   color: AppTheme.secondary,
           
                 ))

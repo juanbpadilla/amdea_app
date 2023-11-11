@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
       title: 'Amdea',
       initialRoute: 'welcome',
       routes: {
-        'welcome':(context) => WelcomePage()
+        'welcome':  (_) => WelcomePage(),
+        'login'  :  (_) => LoginPage()
       },
       theme: Provider.of<ThemeProvider>(context).currentTheme,
     

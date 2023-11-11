@@ -3,18 +3,20 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
 
   final String text;
+  final Function() routeName;
   final Color color;
 
   const CustomButton({
     super.key, 
     required this.text,
+    required this.routeName,
     required this.color
   });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {}, 
+      onPressed: routeName, 
       child: ClipRRect(
         borderRadius: BorderRadius.circular(50),
         child: Container(
