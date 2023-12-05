@@ -6,6 +6,7 @@ class AppTheme {
   static const Color secondary = Color(0xFF1E1E1E);
   static const Color lightGrayColor = Color(0xFFF3F3F3);
   static const Color background = Colors.white;
+  static const Color grayColor = Color(0xFFC7C7C7);
 
   static final ThemeData lightTheme = ThemeData.light().copyWith(
       primaryColor: primary,
@@ -25,11 +26,30 @@ class AppTheme {
           onSurface: secondary),      
       
       textTheme: const TextTheme(
+
+        headlineSmall: TextStyle(
+          fontFamily: 'Montserrat_Medium',
+          fontSize: 30
+        ),
         
         titleLarge: TextStyle(
           fontFamily: 'Montserrat_Bold',
           fontSize: 38,
           color: secondary,
+        ),
+
+        titleMedium: TextStyle(
+          fontFamily: 'Montserrat_medium',
+          fontSize: 40,
+          fontWeight: FontWeight.w500,
+          color: primary
+        ),
+
+        bodySmall: TextStyle(
+          fontFamily: 'Montserrat_Medium',
+            color: AppTheme.background,
+            fontSize: 20,
+            fontWeight: FontWeight.w500
         ),
 
         bodyMedium: TextStyle(

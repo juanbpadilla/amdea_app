@@ -1,4 +1,5 @@
 import 'package:amdea_app/pages/pages.dart';
+import 'package:amdea_app/providers/ui_provider.dart';
 import 'package:amdea_app/share_preferences/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => ThemeProvider(isDarkmode: Preferences.isDarkmode)),
+      ChangeNotifierProvider(create: (_) => UiProvider()),
     ],
     child: const MyApp(),
   ));
@@ -30,7 +32,8 @@ class MyApp extends StatelessWidget {
       initialRoute: 'welcome',
       routes: {
         'welcome':  (_) => WelcomePage(),
-        'login'  :  (_) => LoginPage()
+        'login'  :  (_) => LoginPage(),
+        'home': (_) => HomePage()
       },
       theme: Provider.of<ThemeProvider>(context).currentTheme,
     

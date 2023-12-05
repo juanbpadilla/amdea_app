@@ -34,13 +34,24 @@ class CustomNavigationBar extends StatelessWidget {
                   text: 'Iniciar Sesión',
                   routeName: () => Navigator.pushNamed(context, 'login'),
                   color: AppTheme.primary,
+                  textStyle: TextStyle( 
+                    color: Colors.white ,
+                    fontFamily: 'Montserrat_Medium',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500
+                  ),
                 )),
                 
                 Expanded(child: CustomButton(
                   text: 'Salir',
                   routeName: () => exit(0),
                   color: AppTheme.secondary,
-          
+                  textStyle: TextStyle( 
+                    color: Colors.white ,
+                    fontFamily: 'Montserrat_Medium',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500
+                  ),
                 ))
           
               ],
