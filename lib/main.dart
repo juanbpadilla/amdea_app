@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
       routes: {
         'welcome':  (_) => WelcomePage(),
         'login'  :  (_) => LoginPage(),
-        'home': (_) => HomePage()
+        'home': (_) => HomePage(),
+        'profile': (_) => ProfilePage(),
       },
       theme: Provider.of<ThemeProvider>(context).currentTheme,
     

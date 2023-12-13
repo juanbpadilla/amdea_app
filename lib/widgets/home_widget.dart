@@ -10,39 +10,42 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric( horizontal: 30),
-      child: Column(
-        children: [
-          CustomButton(
-            text: 'Marcar Asistencia',
-            routeName: () => Navigator.pushNamed(context, 'home'),
-            color: const Color(0xFF289618),
-            textStyle: const TextStyle(
-                color: Colors.white ,
-                fontFamily: 'Montserrat_Medium',
-                fontSize: 22,
-                fontWeight: FontWeight.w500
+    return BackgroundWitget(
+        widget: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric( horizontal: 30),
+        child: Column(
+          children: [
+            CustomButton(
+              text: 'Marcar Asistencia',
+              icon: 'check-square.svg',
+              routeName: () => Navigator.pushNamed(context, 'home'),
+              color: const Color(0xFF289618),
+              textStyle: const TextStyle(
+                  color: Colors.white ,
+                  fontFamily: 'Montserrat_Medium',
+                  fontSize: 22,
+                  fontWeight: FontWeight.w500
+              ),
             ),
-          ),
-
-          const SizedBox( height: 20 ),
-
-          const _CardActivity(
-            text1: 'ACTIVIDAD 1',
-            text2: 'Detalle de tarea',
-            text3: '15/02/2023 15:20',
-          ),
-
-          const SizedBox( height: 15 ),
-
-          const _CardActivity(
-            text1: 'ACTIVIDAD 2',
-            text2: 'Detalle de tarea Exercitation enim nisi enim nulla exercitation ipsum quis velit ipsum incididunt quis',
-            text3: '16/02/2023 15:20',
-          )
-        ],
+    
+            const SizedBox( height: 20 ),
+    
+            const _CardActivity(
+              text1: 'ACTIVIDAD 1',
+              text2: 'Detalle de tarea',
+              text3: '15/02/2023 15:20',
+            ),
+    
+            const SizedBox( height: 15 ),
+    
+            const _CardActivity(
+              text1: 'ACTIVIDAD 2',
+              text2: 'Detalle de tarea Exercitation enim nisi enim nulla exercitation ipsum quis velit ipsum incididunt quis',
+              text3: '16/02/2023 15:20',
+            )
+          ],
+        ),
       ),
     );
   }

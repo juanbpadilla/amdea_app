@@ -7,6 +7,13 @@ class AppTheme {
   static const Color lightGrayColor = Color(0xFFF3F3F3);
   static const Color background = Colors.white;
   static const Color grayColor = Color(0xFFC7C7C7);
+  static const Color greenColor = Color(0xFF289618);
+
+  static const String primaryFont ='Montserrat';
+  static const String blackFont ='Montserrat_Black';
+  static const String boldFont ='Montserrat_Bold';
+  static const String lightFont ='Montserrat_Light';
+  static const String mediumFont ='Montserrat_Medium';
 
   static final ThemeData lightTheme = ThemeData.light().copyWith(
       primaryColor: primary,

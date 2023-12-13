@@ -1,3 +1,4 @@
+import 'package:amdea_app/pages/pages.dart';
 import 'package:amdea_app/providers/ui_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,9 +11,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: BackgroundWitget(
-        widget: _HomePageBody(),
-      ),
+      body: _HomePageBody(),
 
       bottomNavigationBar: HomeBottomNavigationBar()
     );
@@ -39,7 +38,7 @@ class _HomePageBody extends StatelessWidget {
       case 3:
         return HomeWidget();
       case 4:
-        return HomeWidget();
+        return ProfilePage();
 
       default:
         return HomeWidget();

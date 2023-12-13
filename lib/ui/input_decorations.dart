@@ -10,7 +10,7 @@ class InputDecorations {
     FocusNode? focusNode,
   }) {
     return InputDecoration(
-      enabledBorder: UnderlineInputBorder(
+      enabledBorder: const UnderlineInputBorder(
         borderSide: BorderSide(
           color: AppTheme.secondary,
         ),

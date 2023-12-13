@@ -7,13 +7,15 @@ class CustomButton extends StatelessWidget {
   final Function() routeName;
   final Color color;
   final TextStyle textStyle;
+  final String? icon;
 
   const CustomButton({
     super.key, 
     required this.text,
     required this.routeName,
     required this.color, 
-    required this.textStyle
+    required this.textStyle, 
+    this.icon
   });
 
   @override
@@ -24,18 +26,22 @@ class CustomButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
         child: Container(
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric( vertical: 10, horizontal: 10 ),
+          padding: const EdgeInsets.symmetric( vertical: 10, horizontal: 20 ),
           color: color,
           // color: const Color(0xFF2C2F88),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                'assets/icons/check-square.svg',
-                colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                // height: 70,
-              ),
-              const SizedBox( width: 5, ),
+              icon != null ? Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: SvgPicture.asset(
+                  'assets/icons/$icon',
+                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  // height: 70,
+                ),
+              )
+              : Container(),
+
               Text(
                 text,
                 style: textStyle

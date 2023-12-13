@@ -2,6 +2,8 @@ import 'package:amdea_app/theme/app_theme.dart';
 // import 'package:amdea_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
+import 'widgets.dart';
+
 class LibrosWidget extends StatelessWidget {
   const LibrosWidget({
     super.key,
@@ -9,66 +11,68 @@ class LibrosWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric( horizontal: 30),
-      child: const Column(
-        children: [
-          Text(
-            'BIBLIOGRAFÍA',
-            style: TextStyle(
-              fontFamily: 'Montserrat_bold',
-              fontSize: 25,
-              fontWeight: FontWeight.w500,
-              color: AppTheme.primary
+    return BackgroundWitget(
+        widget: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric( horizontal: 30),
+        child: const Column(
+          children: [
+            Text(
+              'BIBLIOGRAFÍA',
+              style: TextStyle(
+                fontFamily: 'Montserrat_bold',
+                fontSize: 25,
+                fontWeight: FontWeight.w500,
+                color: AppTheme.primary
+              ),
             ),
-          ),
-
-          SizedBox( height: 20 ),
-
-          Row(
-            children: [
-              _CardActivity(
-                text1: 'CURSO DE TEORÍA',
-              ),
-
-              SizedBox( width: 15 ),
-
-              _CardActivity(
-                text1: 'CURSO DE PHOTOSHOP',
-              ),
-            ],
-          ),
-          SizedBox( height: 15 ),
-          Row(
-            children: [
-              _CardActivity(
-                text1: 'CURSO DE TEORÍA',
-              ),
-
-              SizedBox( width: 15 ),
-
-              _CardActivity(
-                text1: 'CURSO DE PHOTOSHOP',
-              ),
-            ],
-          ),
-          SizedBox( height: 15 ),
-          Row(
-            children: [
-              _CardActivity(
-                text1: 'CURSO DE TEORÍA',
-              ),
-
-              SizedBox( width: 15 ),
-
-              _CardActivity(
-                text1: 'CURSO DE PHOTOSHOP',
-              ),
-            ],
-          ),
-
-        ],
+    
+            SizedBox( height: 20 ),
+    
+            Row(
+              children: [
+                _CardActivity(
+                  text1: 'CURSO DE TEORÍA',
+                ),
+    
+                SizedBox( width: 15 ),
+    
+                _CardActivity(
+                  text1: 'CURSO DE PHOTOSHOP',
+                ),
+              ],
+            ),
+            SizedBox( height: 15 ),
+            Row(
+              children: [
+                _CardActivity(
+                  text1: 'CURSO DE TEORÍA',
+                ),
+    
+                SizedBox( width: 15 ),
+    
+                _CardActivity(
+                  text1: 'CURSO DE PHOTOSHOP',
+                ),
+              ],
+            ),
+            SizedBox( height: 15 ),
+            Row(
+              children: [
+                _CardActivity(
+                  text1: 'CURSO DE TEORÍA',
+                ),
+    
+                SizedBox( width: 15 ),
+    
+                _CardActivity(
+                  text1: 'CURSO DE PHOTOSHOP',
+                ),
+              ],
+            ),
+    
+          ],
+        ),
       ),
     );
   }
