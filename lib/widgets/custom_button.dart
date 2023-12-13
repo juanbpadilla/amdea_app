@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CustomButton extends StatelessWidget {
 
@@ -26,16 +27,21 @@ class CustomButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric( vertical: 10, horizontal: 10 ),
           color: color,
           // color: const Color(0xFF2C2F88),
-          child: Text(
-            text, 
-            style: textStyle
-            // const TextStyle( 
-            //   color: Colors.white ,
-            //   fontFamily: 'Montserrat_Medium',
-            //   fontSize: 20,
-            //   fontWeight: FontWeight.w500
-            // )
-          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/icons/check-square.svg',
+                colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                // height: 70,
+              ),
+              const SizedBox( width: 5, ),
+              Text(
+                text,
+                style: textStyle
+              ),
+            ]
+          )
         ),
       )
     );
