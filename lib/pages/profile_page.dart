@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/login_form_provider.dart';
+import '../providers/ui_provider.dart';
+import '../sercices/auth_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/widgets.dart';
 
@@ -8,12 +12,16 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // final uiProvider = Provider.of<UiProvider>(context, listen: false);
+    final authProvider = Provider.of<LoginFormProvider>(context, listen: false);
+
     return SafeArea(
         child: Container(
           width: double.infinity,
           height: double.infinity,
           color: Theme.of(context).colorScheme.background,
-          child: buildColumProfile(context),
+          child: buildColumProfile(context, authProvider),
         ),
       );
   }
@@ -66,6 +74,9 @@ class ProfilePage extends StatelessWidget {
 
   void displayDialogAndroid(BuildContext context) {
 
+    final authService = Provider.of<AuthService>(context, listen: false);
+    final uiProvider = Provider.of<UiProvider>(context, listen: false);
+
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -98,7 +109,11 @@ class ProfilePage extends StatelessWidget {
                   children: [
                     CustomButton(
                         text: 'Confirmar',
-                        routeName: () => Navigator.pushReplacementNamed(context, 'login'),
+                        routeName: () {
+                          authService.logout();
+                          uiProvider.selectedMenuOpt = 1;
+                          Navigator.pushReplacementNamed(context, 'login');
+                        },
                         color: Colors.green,
                         textStyle: const TextStyle(
                             color: Colors.white ,
@@ -124,7 +139,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget buildColumProfile(BuildContext context) {
+  Widget buildColumProfile(BuildContext context, LoginFormProvider authProvider) {
     return Expanded(
       child: Column(
         children: [

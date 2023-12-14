@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BackgroundWitget extends StatelessWidget {
-  final Widget widget;
-
-  const BackgroundWitget({super.key, required this.widget});
-
+class LoadingPage extends StatelessWidget {
+   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,8 +11,12 @@ class BackgroundWitget extends StatelessWidget {
           width: double.infinity,
           height: double.infinity,
           color: Theme.of(context).colorScheme.background,
-          child: widget,
-        )
+          child: Center(
+            child: CircularProgressIndicator(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -36,7 +36,7 @@ class _HomePageBody extends StatelessWidget {
       case 2:
         return HomeWidget();
       case 3:
-        return HomeWidget();
+        return ActivityWidget();
       case 4:
         return ProfilePage();
 

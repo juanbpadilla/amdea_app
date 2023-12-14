@@ -4,10 +4,12 @@ import 'package:flutter_svg/svg.dart';
 class CustomButton extends StatelessWidget {
 
   final String text;
-  final Function() routeName;
+  final Function()? routeName;
   final Color color;
   final TextStyle textStyle;
   final String? icon;
+  final double? paddingv;
+  final double? paddingh;
 
   const CustomButton({
     super.key, 
@@ -15,18 +17,21 @@ class CustomButton extends StatelessWidget {
     required this.routeName,
     required this.color, 
     required this.textStyle, 
-    this.icon
+    this.icon, 
+    this.paddingv, 
+    this.paddingh
   });
+
 
   @override
   Widget build(BuildContext context) {
+
     return TextButton(
-      onPressed: routeName, 
       child: ClipRRect(
         borderRadius: BorderRadius.circular(50),
         child: Container(
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric( vertical: 10, horizontal: 20 ),
+          padding: EdgeInsets.symmetric( vertical: paddingv ?? 10, horizontal: paddingh ?? 30 ),
           color: color,
           // color: const Color(0xFF2C2F88),
           child: Row(
@@ -49,7 +54,8 @@ class CustomButton extends StatelessWidget {
             ]
           )
         ),
-      )
+      ),
+      onPressed: routeName, 
     );
   }
 }

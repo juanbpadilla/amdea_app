@@ -1,3 +1,4 @@
+export 'package:amdea_app/widgets/activity_widget.dart';
 export 'package:amdea_app/widgets/background_widget.dart';
 export 'package:amdea_app/widgets/libros_widget.dart';
 export 'package:amdea_app/widgets/multimedia_widget.dart';

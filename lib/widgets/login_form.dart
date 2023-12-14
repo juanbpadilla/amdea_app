@@ -2,12 +2,23 @@ import 'package:amdea_app/theme/app_theme.dart';
 import 'package:amdea_app/ui/input_decorations.dart';
 import 'package:amdea_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/login_form_provider.dart';
+import '../sercices/auth_service.dart';
+import '../sercices/notifications_service.dart';
 
 class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final loginForm = Provider.of<LoginFormProvider>(context);
+
     return Form(
+
+      key: loginForm.formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
           const SizedBox( height: 50 ),
@@ -25,6 +36,7 @@ class LoginForm extends StatelessWidget {
               labelText: 'Correo', 
               prefixIcon: Icons.email,
             ),
+            onChanged: (value) => loginForm.email = value,
             validator: (value) {
               String pattern =
                   r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -53,6 +65,7 @@ class LoginForm extends StatelessWidget {
               prefixIcon: Icons.lock
 
             ),
+            onChanged: (value) => loginForm.password = value,
             validator: (value) {
               return (value != null && value.length >= 6)
                   ? null
@@ -73,8 +86,35 @@ class LoginForm extends StatelessWidget {
           // ),
 
           CustomButton(
-              text: 'Acceder',
-              routeName: () => Navigator.pushNamed(context, 'home'),
+              text: loginForm.isLoading
+                ? 'Espere..'
+                : 'Ingresar',
+              routeName: loginForm.isLoading ? null : () async {
+
+                FocusScope.of(context).unfocus();
+                  final authService = Provider.of<AuthService>(context, listen: false);
+
+                  if (!loginForm.isValidForm()) return;
+
+                  loginForm.isLoading = true;
+
+                  // TODO: validar si el loading es correcto
+                  // ignore: unused_local_variable
+                  final String? errorMessage = await authService.login(
+                    loginForm.email, 
+                    loginForm.password
+                  );
+
+                  if ( errorMessage == null ) {
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushReplacementNamed(context, 'home');
+                  } else {
+                    //  TODO: mostrar error en pantalla
+                    print(errorMessage);
+                    NotificationsService.showSnackbar(errorMessage, Theme.of(context).colorScheme.onBackground, Theme.of(context).colorScheme.background);
+                    loginForm.isLoading = false;
+                  }
+              },
               color: AppTheme.primary,
               textStyle: const TextStyle(
                 color: Colors.white ,

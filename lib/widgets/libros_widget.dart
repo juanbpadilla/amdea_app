@@ -1,3 +1,4 @@
+import 'package:amdea_app/pages/pages.dart';
 import 'package:amdea_app/sercices/book_service.dart';
 import 'package:amdea_app/theme/app_theme.dart';
 import 'package:amdea_app/widgets/widgets.dart';
@@ -11,6 +12,8 @@ class LibrosWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final libroService = Provider.of<BookService>(context);
+
+    if( libroService.isLoading ) return LoadingPage();
 
     return BackgroundWitget(
         widget: SingleChildScrollView(
@@ -43,7 +46,7 @@ class LibrosWidget extends StatelessWidget {
                 
               ),
               
-              _ListBody(libroService: libroService),
+              _ListBody(libroService: libroService,),
                           
             ],
           ),
@@ -53,59 +56,55 @@ class LibrosWidget extends StatelessWidget {
 }
 
 class _ListBody extends StatelessWidget {
-  const _ListBody({
-    required this.libroService
-  });
 
   final BookService libroService;
 
+  const _ListBody({super.key, required this.libroService});
+
   @override
   Widget build(BuildContext context) {
+
+
     return Container(
       // padding: const EdgeInsets.symmetric( vertical: 20 ),
       height: MediaQuery.of(context).size.height,
       width: double.infinity,
-      child: ListView.builder(
+      child: ListView.separated(
         itemCount: libroService.libros.length,
-        itemBuilder: (context, int index) => GestureDetector(
-          child: Column(
-            children: [
-              ListTile(
-                onTap: () {},
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox( height: 5 ),
-                    Text(
-                      libroService.libros[index].title.toUpperCase(),
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
-                        fontFamily: AppTheme.boldFont,                    
-                        fontSize: 22
-                      ),
-                    ),
-                    const SizedBox( height: 5 ),
-                    Text(
-                      libroService.libros[index].title.toUpperCase(),
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
-                        fontSize: 18,                    
-                      ),
-                    ),
-                  ],
+        itemBuilder: (context, int index) {
+          return ListTile(
+            // onTap: () {},
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  libroService.libros[index].title.toUpperCase(),
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontFamily: AppTheme.boldFont,                    
+                    fontSize: 22
+                  ),
                 ),
-                trailing: SvgPicture.asset(
-                  'assets/icons/pdf_layer.svg',
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
-                  height: 30,
+                const SizedBox( height: 5 ),
+                Text(
+                  libroService.libros[index].title.toUpperCase(),
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 18,                    
+                  ),
                 ),
-              ),
-              Divider(color: Theme.of(context).colorScheme.primary, thickness: 1, height: 30, indent: 0, endIndent: 0),
-            ],
-          ), 
-        ),
+              ],
+            ),
+            trailing: SvgPicture.asset(
+              'assets/icons/pdf_layer.svg',
+              colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+              height: 30,
+            ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) => Divider(color: Theme.of(context).colorScheme.primary, thickness: 1, height: 30, indent: 0, endIndent: 0)
       ),
     );
   }
