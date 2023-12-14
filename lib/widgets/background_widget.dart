@@ -7,25 +7,17 @@ class BackgroundWitget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Scaffold(
+      // backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Color(0xFFFFC107),
+      body: SafeArea(
         child: Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: Theme.of(context).colorScheme.background,
-      child: Column(
-        children: [
-          const SizedBox( height: 50, ),
-
-          const SizedBox(
-            width: 220,
-            child: Image(image: AssetImage('assets/logo.png'))
-          ),
-
-          const SizedBox( height: 70 ),
-
-          widget
-        ],
+          width: double.infinity,
+          height: double.infinity,
+          color: Theme.of(context).colorScheme.background,
+          child: widget,
+        )
       ),
-    ));
+    );
   }
 }

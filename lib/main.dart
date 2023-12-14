@@ -1,5 +1,6 @@
 import 'package:amdea_app/pages/pages.dart';
 import 'package:amdea_app/providers/ui_provider.dart';
+import 'package:amdea_app/sercices/book_service.dart';
 import 'package:amdea_app/share_preferences/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (_) => ThemeProvider(isDarkmode: Preferences.isDarkmode)),
       ChangeNotifierProvider(create: (_) => UiProvider()),
+      ChangeNotifierProvider(create: (_) => BookService()),
     ],
     child: const MyApp(),
   ));

@@ -16,6 +16,13 @@ class HomeWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric( horizontal: 30),
         child: Column(
           children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
+              child: Image(image: AssetImage('assets/logo.png')),
+            ),
+
+            const SizedBox( height: 10 ),
+              
             CustomButton(
               text: 'Marcar Asistencia',
               icon: 'check-square.svg',

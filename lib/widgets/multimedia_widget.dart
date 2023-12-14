@@ -17,6 +17,13 @@ class MultimediaWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric( horizontal: 30),
         child: const Column(
           children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
+              child: Image(image: AssetImage('assets/logo.png')),
+            ),
+
+            SizedBox( height: 10 ),
+              
             Text(
               'RECURSOS MULTIMEDIA',
               style: TextStyle(
