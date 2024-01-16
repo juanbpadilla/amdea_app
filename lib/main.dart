@@ -1,3 +1,4 @@
+import 'package:amdea_app/pages/check_auth_page.dart';
 import 'package:amdea_app/pages/pages.dart';
 import 'package:amdea_app/providers/login_form_provider.dart';
 import 'package:amdea_app/providers/ui_provider.dart';
@@ -37,8 +38,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Amdea',
-      initialRoute: 'welcome',
+      initialRoute: 'checking',
       routes: {
+        'checking': ( _ ) => CheckAuthPage(),
         'welcome':  (_) => WelcomePage(),
         'login'  :  (_) => LoginPage(),
         'home': (_) => HomePage(),

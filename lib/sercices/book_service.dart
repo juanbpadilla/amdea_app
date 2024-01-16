@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 class BookService extends ChangeNotifier {
   final String _baseUrl = "10.0.2.2:8000";
+  final String _accept = "application/vnd.api+json";
   // final String _baseUrl = "790b-2800-cd0-df4f-1600-c54c-6ee-376a-d1c9.ngrok-free.app";
 
   List<Libro> libros = [];
@@ -23,9 +24,9 @@ class BookService extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final url = Uri.http(_baseUrl, '/api/books');
+    final url = Uri.http(_baseUrl, '/api/v1/books');
     // final url = Uri.https(_baseUrl, '/api/books');
-    final response = await http.get( url );
+    final response = await http.get( url, headers: { 'Accept': _accept } );
 
     if ( response.statusCode != 200 ) {
       // ignore: avoid_print

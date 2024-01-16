@@ -67,7 +67,7 @@ class LoginForm extends StatelessWidget {
             ),
             onChanged: (value) => loginForm.password = value,
             validator: (value) {
-              return (value != null && value.length >= 6)
+              return (value != null && value.length >= 5)
                   ? null
                   : 'La contraseña debe contener 6 o más caracteres';
             },

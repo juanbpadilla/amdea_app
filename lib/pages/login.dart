@@ -8,20 +8,29 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: BackgroundWitget(
-        widget: Padding(
-          padding: EdgeInsets.all(0.8),
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric( horizontal: 30, vertical: 20  ),
-            child: Column(
-              children: [
-                Text(
-                  'Inicio de sesión',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                  
-                LoginForm()
-              ],
+        widget: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(0.8),
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric( horizontal: 30, vertical: 20  ),
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
+                    child: Image(image: AssetImage('assets/logo.png')),
+                  ),
+        
+                  const SizedBox( height: 10 ),
+        
+                  Text(
+                    'Inicio de sesión',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                    
+                  LoginForm()
+                ],
+              ),
             ),
           ),
         ),

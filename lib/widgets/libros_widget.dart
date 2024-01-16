@@ -78,7 +78,7 @@ class _ListBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  libroService.libros[index].title.toUpperCase(),
+                  libroService.libros[index].lesson.toUpperCase(),
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onBackground,

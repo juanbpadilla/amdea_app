@@ -31,7 +31,7 @@ class CustomButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
         child: Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.symmetric( vertical: paddingv ?? 10, horizontal: paddingh ?? 30 ),
+          padding: EdgeInsets.symmetric( vertical: paddingv ?? 10, horizontal: paddingh ?? 10 ),
           color: color,
           // color: const Color(0xFF2C2F88),
           child: Row(

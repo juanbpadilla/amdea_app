@@ -19,7 +19,7 @@ class ProfilePage extends StatelessWidget {
     return SafeArea(
         child: Container(
           width: double.infinity,
-          height: double.infinity,
+          // height: double.infinity,
           color: Theme.of(context).colorScheme.background,
           child: buildColumProfile(context, authProvider),
         ),
@@ -112,7 +112,7 @@ class ProfilePage extends StatelessWidget {
                         routeName: () {
                           authService.logout();
                           uiProvider.selectedMenuOpt = 1;
-                          Navigator.pushReplacementNamed(context, 'login');
+                          Navigator.pushReplacementNamed(context, 'welcome');
                         },
                         color: Colors.green,
                         textStyle: const TextStyle(
@@ -140,135 +140,133 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget buildColumProfile(BuildContext context, LoginFormProvider authProvider) {
-    return Expanded(
-      child: Column(
-        children: [
-          InkWell(
-            onTap: () {},
-            child: SizedBox(
-              height: 150,
-              child: DrawerHeader(
-                decoration: UnderlineTabIndicator(
-                  borderSide: BorderSide(
-                    width: 0.5,
-                    color: Theme.of(context).colorScheme.primary
-                  )
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _CircleAvatar(),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                              'Omar Cayo',
-                              style: TextStyle(
-                                  fontFamily: AppTheme.boldFont,
-                                  color: AppTheme.primary,
-                                  fontSize: 25
-                              )
-                          ),
-                          Row(
-                            children: [
-                          
-                              SvgPicture.asset(
-                                'assets/icons/graduation-hat-01.svg',
-                                colorFilter: const ColorFilter.mode(
-                                  AppTheme.greenColor,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                          
-                              const SizedBox(width: 1),
-                          
-                              const Text(
-                                "Estudiante",
-                                style: TextStyle(
-                                    fontFamily: AppTheme.boldFont,
-                                    fontSize: 20,
-                                    color: AppTheme.greenColor,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              )
-                            ]
-                          ),
-                          
-                        ],
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.arrow_back_ios, textDirection: TextDirection.rtl, size: 35, color: Theme.of(context).colorScheme.primary,)
-                    )
-                  ],
+    return Column(
+      children: [
+        InkWell(
+          onTap: () {},
+          child: SizedBox(
+            height: 150,
+            child: DrawerHeader(
+              decoration: UnderlineTabIndicator(
+                borderSide: BorderSide(
+                  width: 0.5,
+                  color: Theme.of(context).colorScheme.primary
                 )
               ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              children: [
-                buildDrawerItem(
-                    title: 'Asistencia',
-                    leading: _Icon('check-square.svg'),
-                    onPressed: () {}
-                  // onPressed: () => Get.to(()=> PaymentScreen())
-                ),
-                buildDrawerItem(
-                  title: 'Calificaciones',
-                  leading: _Icon('Doc_15.svg'),
-                  onPressed: () {
-                    // Navigator.pushNamed(context, 'places');
-                  },
-                  // isVisible: true
-                ),                
-                _ListSettings(
-                  leading: const _Icon('moon.svg'),
-                  // title: _SwitchAdaptative(),
-                  title: _Switch(
-                    buttonSwitch: Switch(
-                        // value: Preferences.isDarkmode,
-                        value: true,
-                        activeColor: AppTheme.primary,
-                        onChanged: (value) {
-                          // Preferences.isDarkmode = value;
-    
-                          // final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-                          //
-                          // value
-                          //     ? themeProvider.setDarkmode()
-                          //     : themeProvider.setLightMode();
-                          //
-                          // setState(() {});
-                        }
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  _CircleAvatar(),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                            'Omar Cayo',
+                            style: TextStyle(
+                                fontFamily: AppTheme.boldFont,
+                                color: AppTheme.primary,
+                                fontSize: 25
+                            )
+                        ),
+                        Row(
+                          children: [
+                        
+                            SvgPicture.asset(
+                              'assets/icons/graduation-hat-01.svg',
+                              colorFilter: const ColorFilter.mode(
+                                AppTheme.greenColor,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                        
+                            const SizedBox(width: 1),
+                        
+                            const Text(
+                              "Estudiante",
+                              style: TextStyle(
+                                  fontFamily: AppTheme.boldFont,
+                                  fontSize: 20,
+                                  color: AppTheme.greenColor,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ]
+                        ),
+                        
+                      ],
                     ),
                   ),
-                ),
-                buildDrawerItem(
-                  title: 'Ayuda',
-                  leading: _Icon('help-square.svg'),
-                  onPressed: () {
-                    // Navigator.pushNamed(context, 'places');
-                  },
-                  // isVisible: true
-                ),
-                buildDrawerItem(
-                    title: 'Cerrar Sesión',
-                    leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.onBackground),
-                    onPressed: () => displayDialogAndroid(context)
-                ),
-              ],
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.arrow_back_ios, textDirection: TextDirection.rtl, size: 35, color: Theme.of(context).colorScheme.primary,)
+                  )
+                ],
+              )
             ),
           ),
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            children: [
+              buildDrawerItem(
+                  title: 'Asistencia',
+                  leading: _Icon('check-square.svg'),
+                  onPressed: () {}
+                // onPressed: () => Get.to(()=> PaymentScreen())
+              ),
+              buildDrawerItem(
+                title: 'Calificaciones',
+                leading: _Icon('Doc_15.svg'),
+                onPressed: () {
+                  // Navigator.pushNamed(context, 'places');
+                },
+                // isVisible: true
+              ),                
+              _ListSettings(
+                leading: const _Icon('moon.svg'),
+                // title: _SwitchAdaptative(),
+                title: _Switch(
+                  buttonSwitch: Switch(
+                      // value: Preferences.isDarkmode,
+                      value: true,
+                      activeColor: AppTheme.primary,
+                      onChanged: (value) {
+                        // Preferences.isDarkmode = value;
+    
+                        // final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+                        //
+                        // value
+                        //     ? themeProvider.setDarkmode()
+                        //     : themeProvider.setLightMode();
+                        //
+                        // setState(() {});
+                      }
+                  ),
+                ),
+              ),
+              buildDrawerItem(
+                title: 'Ayuda',
+                leading: _Icon('help-square.svg'),
+                onPressed: () {
+                  // Navigator.pushNamed(context, 'places');
+                },
+                // isVisible: true
+              ),
+              buildDrawerItem(
+                  title: 'Cerrar Sesión',
+                  leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.onBackground),
+                  onPressed: () => displayDialogAndroid(context)
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

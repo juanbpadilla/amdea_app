@@ -2,13 +2,17 @@
 
 class Libro {
     int id;
+    String lesson;
     String title;
+    String? link;
     DateTime createdAt;
     DateTime updatedAt;
 
     Libro({
         required this.id,
+        required this.lesson,
         required this.title,
+        this.link,
         required this.createdAt,
         required this.updatedAt,
     });
@@ -16,7 +20,9 @@ class Libro {
     factory Libro.fromJson(Map<String, dynamic> json) {
       return Libro(
         id: json['id'],
+        lesson: json['lesson'],
         title: json['title'],
+        link: json['link'] ?? '',
         createdAt: DateTime.parse(json['created_at']),
         updatedAt: DateTime.parse(json['updated_at']),
       );
