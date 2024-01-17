@@ -27,73 +27,120 @@ class UserPage extends StatelessWidget {
         child: SingleChildScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 35),
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 50, right: 50, top: 40, bottom: 15),
-                      child: Image(image: AssetImage('assets/logo.png')),
+                    Column(
+                      children: [
+                        const SizedBox(height: 25,),
+
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width*0.5,
+                          child: const Image(image: AssetImage('assets/logo.png'))
+                        ),
+              
+                        Stack(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icons/user-circle.svg',
+                              width: 160,
+                              height: 160,
+                            ),
+                            const Positioned(
+                              right: 11,
+                              bottom: 17,
+                              child: Image(image: AssetImage('assets/icons/edit-05.png'),)
+                            ),
+                          ],
+                        ),
+              
+                        primaryText('Omar Cayo', context),
+                        
+                      ],
                     ),
-          
-                    SvgPicture.asset(
-                      'assets/icons/user-circle.svg',
-                      width: 180,
-                      height: 180,
+
+                    const SizedBox(height: 15),
+              
+                    Column(
+                      children: [
+                        listRow('graduation-hat-01', 'Estudiante', context),
+                        listRow('pin-01', 'Publicidad', context),
+                        listRow('bookmark-check', 'Ingeniería Comercial', context),
+                      ],
                     ),
-          
-                    primaryText('Omar Cayo'),
-                    
+
+                    const SizedBox(height: 17),
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        primaryText('Agregar contactos', context),
+                        const SizedBox(height: 5),
+                        contactForm(context)                    
+                      ],
+                    ),
+
+                    const SizedBox( height: 15,),
+
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          child: Text(
+                            'Universidad Autónoma Juan Misael Saracho',
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: AppTheme.boldFont,
+                              fontSize: 17,
+                              color: Theme.of(context).colorScheme.onPrimary
+                            )
+                          ),
+                        ),
+                        
+                      ],
+                    )
                   ],
                 ),
-
-                const SizedBox(height: 10),
-          
-                Column(
-                  children: [
-                    listRow('graduation-hat-01', 'Estudiante'),
-                    listRow('pin-01', 'Publicidad'),
-                    listRow('bookmark-check', 'Ingeniería Comercial'),
-                  ],
-                ),
-
-                const SizedBox(height: 15),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    primaryText('Agregar contactos'),
-                    contactForm(context),
-                  ],
+              ),
+              const SizedBox( height: 5),
+              Text(
+                'Facultad de Ciencias Empresariales',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: AppTheme.primaryFont,
+                  fontSize: 17,
+                  color: Theme.of(context).colorScheme.onPrimary
                 )
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget primaryText(String text) {
+  Widget primaryText(String text, BuildContext context) {
     return Text(text, style: const TextStyle(
       fontFamily: AppTheme.boldFont,
-      fontSize: 20,
+      fontSize: 18,
       color: AppTheme.primary,
     ));
   }
 
-  Widget listRow(String icon, String text) {
+  Widget listRow(String icon, String text, BuildContext context) {
     return Row(
       children: [
     
         SvgPicture.asset(
           'assets/icons/$icon.svg',
-          colorFilter: const ColorFilter.mode(
-            AppTheme.grayColor,
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).colorScheme.onPrimary,
             BlendMode.srcIn,
           ),
         ),
@@ -102,10 +149,10 @@ class UserPage extends StatelessWidget {
     
         Text(
           text,
-          style: const TextStyle(
+          style: TextStyle(
               fontFamily: AppTheme.boldFont,
-              fontSize: 20,
-              color: AppTheme.grayColor,
+              fontSize: 18,
+              color: Theme.of(context).colorScheme.onPrimary,
           ),
           overflow: TextOverflow.ellipsis,
         )
@@ -121,15 +168,41 @@ class UserPage extends StatelessWidget {
           TextFormField(
             style: TextStyle(
               color: Theme.of(context).colorScheme.secondary,
-              fontSize: 20,
-              fontFamily: 'Montserrat'
+              fontSize: 18,
+              fontFamily: AppTheme.primaryFont
+            ),
+            autocorrect: false,
+            keyboardType: TextInputType.phone,
+            decoration: InputDecorations.authInputDecoration(
+              hintText: 'Celular', 
+              labelText: 'Celular', 
+              prefixIcon: Icons.phone_outlined,
+              suffixIcon: 'edit-05',
+              context: context,
+            ),
+            onChanged: (value) {},
+            validator: (value) {
+              return (value != null && value.length >= 5)
+                  ? null
+                  : 'La contraseña debe contener 6 o más caracteres';
+            },
+          ),
+
+          const SizedBox( height: 8 ),
+
+          TextFormField(
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.secondary,
+              fontSize: 18,
+              fontFamily: AppTheme.primaryFont
             ),
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecorations.authInputDecoration(
               hintText: 'Correo', 
               labelText: 'Correo', 
-              prefixIcon: Icons.email,
+              prefixIcon: Icons.email_outlined,
+              suffixIcon: 'edit-05',
               context: context,
             ),
             onChanged: (value) {},
@@ -146,40 +219,18 @@ class UserPage extends StatelessWidget {
 
           const SizedBox( height: 20 ),
 
-          TextFormField(
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.secondary,
-              fontSize: 20,
-              fontFamily: 'Montserrat'
+          Padding(
+            padding: const EdgeInsets.only(left: 8, right: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                primaryText('Cambiar Contraseña', context),
+                const Image(image: AssetImage('assets/icons/edit-05.png'),),
+              ],
             ),
-            autocorrect: false,
-            obscureText: true,
-            keyboardType: TextInputType.visiblePassword,
-            decoration: InputDecorations.authInputDecoration(
-              hintText: 'Contraseña', 
-              labelText: 'Contraseña', 
-              prefixIcon: Icons.lock,
-              context: context,
-            ),
-            onChanged: (value) {},
-            validator: (value) {
-              return (value != null && value.length >= 5)
-                  ? null
-                  : 'La contraseña debe contener 6 o más caracteres';
-            },
           ),
 
-          const SizedBox( height: 30 ),
-
-          // FormButton( 
-          //   // routeName: 'home',
-          //   name: 'Acceder',
-          //   color: AppTheme.primary,
-          //   textStyle: Theme.of(context).textTheme.headlineSmall,
-          //   loginForm: () {
-          //     // Navigation
-          //   }
-          // ),
+          const SizedBox( height: 17 ),
 
           CustomButton(
               text: 'Guardar',
@@ -188,22 +239,15 @@ class UserPage extends StatelessWidget {
               //   : 'Guardar',
               // routeName: loginForm.isLoading ? null : () async {
               routeName: () {},
+              paddingv: 6,
               color: AppTheme.primary,
               textStyle: const TextStyle(
                 color: Colors.white ,
-                fontFamily: 'Montserrat_Medium',
-                fontSize: 30,
+                fontFamily: AppTheme.mediumFont,
+                fontSize: 27,
                 fontWeight: FontWeight.w500
               ),
             ),
-
-          const SizedBox( height: 20,),
-
-          const Text('Olvide mi contraseña', style: TextStyle(
-            color: AppTheme.primary,
-            fontFamily: 'Montserrat',
-            fontSize: 20
-          )),
 
         ],
       )

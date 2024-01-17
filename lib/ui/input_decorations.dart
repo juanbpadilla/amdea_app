@@ -8,6 +8,7 @@ class InputDecorations {
     required String labelText,
     required BuildContext context,
     IconData? prefixIcon,
+    String? suffixIcon,
     FocusNode? focusNode,
   }) {
     return InputDecoration(
@@ -29,7 +30,10 @@ class InputDecorations {
       ),
       prefixIcon: prefixIcon != null
         ? Icon( prefixIcon, color: Theme.of(context).colorScheme.onPrimary )
-        : null
+        : null,
+      suffixIcon: suffixIcon != null
+        ? Image(image: AssetImage('assets/icons/$suffixIcon.png'),)
+        : null,
     );
   }
 
