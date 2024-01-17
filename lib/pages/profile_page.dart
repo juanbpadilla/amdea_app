@@ -1,3 +1,4 @@
+import 'package:amdea_app/pages/check_auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +9,13 @@ import '../sercices/auth_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/widgets.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
 
@@ -19,9 +25,38 @@ class ProfilePage extends StatelessWidget {
     return SafeArea(
         child: Container(
           width: double.infinity,
-          // height: double.infinity,
+          height: MediaQuery.of(context).size.height,
           color: Theme.of(context).colorScheme.background,
-          child: buildColumProfile(context, authProvider),
+          child: FutureBuilder(
+            future: authProvider.fetchUserDetails(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if ( snapshot.connectionState == ConnectionState.waiting ) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (authProvider.user!.name.isEmpty ) {
+                print('object ${authProvider.user!.name}');
+                Future.microtask(() {
+
+                  // uiProvider.selectedMenuOpt = 1;
+                  Navigator.pushReplacement(context, PageRouteBuilder(
+                    pageBuilder: ( _, __, ___) => CheckAuthPage(),
+                    transitionDuration: const Duration( seconds: 0 )
+                  ));
+
+                });
+              } else {
+                return Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height - 200,
+                  
+                  margin: const EdgeInsets.symmetric( vertical: 20 ),
+                  child: buildColumProfile(context ,authProvider),            
+                );
+              }
+
+              return Container();
+            },
+          ),
+          // child: buildColumProfile(context, authProvider),
         ),
       );
   }
@@ -143,7 +178,13 @@ class ProfilePage extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(
+              context, 
+              'user',
+              // arguments: { 'name': user.name, 'email': user.email }
+            );
+          },
           child: SizedBox(
             height: 150,
             child: DrawerHeader(
@@ -162,13 +203,14 @@ class ProfilePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                            'Omar Cayo',
-                            style: TextStyle(
-                                fontFamily: AppTheme.boldFont,
-                                color: AppTheme.primary,
-                                fontSize: 25
-                            )
+                        Text(
+                          '${authProvider.user?.name}',
+                          // 'Omar Cayo',
+                          style: const TextStyle(
+                              fontFamily: AppTheme.boldFont,
+                              color: AppTheme.primary,
+                              fontSize: 25
+                          )
                         ),
                         Row(
                           children: [

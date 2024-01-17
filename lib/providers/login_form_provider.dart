@@ -14,6 +14,7 @@ class LoginFormProvider extends ChangeNotifier {
 
   String name = '';
   String number = '';
+  String username = '';
   String email = '';
   String password = '';
   String passwordConfirmation = '';

@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
         'login'  :  (_) => LoginPage(),
         'home': (_) => HomePage(),
         'profile': (_) => ProfilePage(),
+        'user': (_) => UserPage(),
         'activity': (_) => ActivityWidget(),
       },
       scaffoldMessengerKey: NotificationsService.messengerKey,

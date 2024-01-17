@@ -6,7 +6,8 @@ class AppTheme {
   static const Color secondary = Color(0xFF1E1E1E);
   static const Color lightGrayColor = Color(0xFFF3F3F3);
   static const Color background = Colors.white;
-  static const Color grayColor = Color(0xFFC7C7C7);
+  // static const Color grayColor = Color(0xFFC7C7C7);
+  static const Color grayColor = Color(0xFFA6A6A6);
   static const Color greenColor = Color(0xFF289618);
 
   static const String primaryFont ='Montserrat';
@@ -22,7 +23,7 @@ class AppTheme {
       colorScheme: const ColorScheme(
           brightness: Brightness.light,
           primary: primary,
-          onPrimary: secondary,
+          onPrimary: grayColor,
           secondary: secondary,
           onSecondary: background,
           error: Colors.red,

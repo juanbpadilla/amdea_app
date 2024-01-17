@@ -32,19 +32,17 @@ class LoginForm extends StatelessWidget {
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecorations.authInputDecoration(
-              hintText: 'Correo', 
-              labelText: 'Correo', 
-              prefixIcon: Icons.email,
+              hintText: 'Usuario', 
+              labelText: 'Usuario', 
+              prefixIcon: Icons.person_2_outlined,
+              context: context,
             ),
             onChanged: (value) => loginForm.email = value,
             validator: (value) {
-              String pattern =
-                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-              RegExp regExp = RegExp(pattern);
 
-              return regExp.hasMatch(value ?? '')
+              return (value != null && value.length >= 4)
                   ? null
-                  : 'El valor ingresado no es un correo';
+                  : 'El usuario debe contener 4 o más caracteres';
             },
           ),
 
@@ -62,8 +60,8 @@ class LoginForm extends StatelessWidget {
             decoration: InputDecorations.authInputDecoration(
               hintText: 'Contraseña', 
               labelText: 'Contraseña', 
-              prefixIcon: Icons.lock
-
+              prefixIcon: Icons.lock,
+              context: context,
             ),
             onChanged: (value) => loginForm.password = value,
             validator: (value) {

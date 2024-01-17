@@ -36,10 +36,11 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<String?> login(
-    String email, String password,
+    String username, String password,
   ) async {
     final Map<String, dynamic> authData = {
-      'email': email,
+      // 'email': email,
+      'username': username,
       'password': password,
       'device_name': 'deviceName-phone'
     };

@@ -6,13 +6,14 @@ class InputDecorations {
   static InputDecoration authInputDecoration({
     required String hintText,
     required String labelText,
+    required BuildContext context,
     IconData? prefixIcon,
     FocusNode? focusNode,
   }) {
     return InputDecoration(
-      enabledBorder: const UnderlineInputBorder(
+      enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(
-          color: AppTheme.secondary,
+          color: Theme.of(context).colorScheme.onPrimary,
         ),
       ),
       focusedBorder: const UnderlineInputBorder(
@@ -27,7 +28,7 @@ class InputDecorations {
         color: Color.fromARGB(255, 15, 14, 14)
       ),
       prefixIcon: prefixIcon != null
-        ? Icon( prefixIcon, color: AppTheme.secondary )
+        ? Icon( prefixIcon, color: Theme.of(context).colorScheme.onPrimary )
         : null
     );
   }
