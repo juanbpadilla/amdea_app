@@ -3,7 +3,9 @@ import 'dart:convert';
 class User {
   String? id;
   String name;
+  String lastname;
   String username;
+  String? phone;
   String? email;
   String? password;
   String? passwordConfirmation;
@@ -14,7 +16,9 @@ class User {
   User({
     this.id,
     required this.name,
+    required this.lastname,
     required this.username,
+    this.phone,
     this.email,
     this.password,
     this.passwordConfirmation,
@@ -30,8 +34,10 @@ class User {
   factory User.fromMap(Map<String, dynamic> json) => User(
         id: json["id"] ?? '',
         name: json["name"] ?? '',
+        lastname: json["lastname"] ?? '',
         username: json["username"] ?? '',
         email: json["email"] ?? '',
+        phone: json["phone"] ?? '',
         password: json["password"] ?? '',
         passwordConfirmation: json["passwordConfirmation"] ?? '',
         emailVerifiedAt: json["email_verified_at"] ?? '',
@@ -53,6 +59,7 @@ class User {
 
   User copy() => User(
     name: name, 
+    lastname: lastname, 
     username: username,
     password: password,
     passwordConfirmation: passwordConfirmation,

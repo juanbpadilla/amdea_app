@@ -10,33 +10,42 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
     return BackgroundWitget(
         widget: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric( horizontal: 30),
+        width: width,
+        padding: EdgeInsets.symmetric( horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
-              child: Image(image: AssetImage('assets/logo.png')),
-            ),
+            const SizedBox( height: 50 ),
 
-            const SizedBox( height: 10 ),
+            Image(image: AssetImage('assets/logo.png'), width: width * 0.55),
+
+            const SizedBox( height: 50 ),
               
-            CustomButton(
-              text: 'Marcar Asistencia',
-              icon: 'check-square.svg',
-              routeName: () => Navigator.pushNamed(context, 'home'),
-              color: const Color(0xFF289618),
-              textStyle: const TextStyle(
-                  color: Colors.white ,
-                  fontFamily: 'Montserrat_Medium',
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width * 0.065),
+              child: CustomButton(
+                text: 'Marcar Asistencia',
+                icon: 'check-square.svg',
+                routeName: () => Navigator.pushNamed(context, 'home'),
+                color: const Color(0xFF289618),
+                paddingv: height * 0.012,
+                paddingh: 2,
+                textStyle: const TextStyle(
+                    color: Colors.white ,
+                    fontFamily: 'Montserrat_Medium',
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500
+                ),
               ),
             ),
     
-            const SizedBox( height: 20 ),
+            SizedBox( height: height * 0.025 ), //  Tamaño 20 relativo
     
             const _CardActivity(
               text1: 'ACTIVIDAD 1',
@@ -44,7 +53,7 @@ class HomeWidget extends StatelessWidget {
               text3: '15/02/2023 15:20',
             ),
     
-            const SizedBox( height: 15 ),
+            SizedBox( height: height * 0.019 ), //  Tamaño 15 relativo
     
             const _CardActivity(
               text1: 'ACTIVIDAD 2',
@@ -73,10 +82,13 @@ class _CardActivity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
     return ClipRRect(
-      borderRadius: BorderRadius.circular(50),
+      borderRadius: BorderRadius.circular(12),
       child: Container(
-        padding: const EdgeInsets.symmetric( vertical: 8, horizontal: 25 ),
+        padding: EdgeInsets.symmetric( vertical: height * 0.011, horizontal: width * 0.025 ),
         color: AppTheme.primary,
         child: Column(
           children: [
@@ -92,28 +104,30 @@ class _CardActivity extends StatelessWidget {
                 const SizedBox( width: 15, ),
 
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.45,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   // color: Colors.red,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         text1,
-                        style: const TextStyle(
+                        // ((height * 0.036).toInt()).toString(),
+                        // ((width * 0.025).toInt()).toString(),
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 23,
+                          fontSize: height * 0.028, //  Tamaño 23 relativo
                           fontFamily: 'Monserrat',
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                 
-                      const SizedBox( height: 3 ),
+                      // SizedBox( height: height * 0.004 ), //  Tamaño 3 relativo
                       
                       Text(
                         text2,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 17,
+                          fontSize: height * 0.021, //  Tamaño 17 relativo
                           fontFamily: 'Monserrat',
                           fontWeight: FontWeight.w500,
                         ),
@@ -121,7 +135,7 @@ class _CardActivity extends StatelessWidget {
                         // maxLines: 2,
                       ),
                       
-                      const SizedBox( height: 18 ),
+                      const SizedBox( height: 15 ),
                   
                       Row(
                         children: [
@@ -131,7 +145,7 @@ class _CardActivity extends StatelessWidget {
                           _TextContent(text: text3),
                         ],
                       ),
-                      const SizedBox( height: 5 ),
+                      SizedBox( height: height * 0.01 ), //  Tamaño 8 relativo
                     ],
                   ),
                 )

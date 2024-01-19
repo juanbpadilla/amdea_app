@@ -1,3 +1,4 @@
+
 import 'package:amdea_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,8 @@ class InputDecorations {
     required String hintText,
     required String labelText,
     required BuildContext context,
+    Color? borderColor,
+    double fontSize = 18,
     IconData? prefixIcon,
     String? suffixIcon,
     FocusNode? focusNode,
@@ -14,7 +17,7 @@ class InputDecorations {
     return InputDecoration(
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: borderColor ?? Theme.of(context).colorScheme.onPrimary,
         ),
       ),
       focusedBorder: const UnderlineInputBorder(
@@ -24,12 +27,17 @@ class InputDecorations {
         ),
       ),
       hintText: hintText,
+      hintStyle: TextStyle(
+        color: borderColor ?? Color.fromARGB(255, 15, 14, 14),
+        fontSize: fontSize,
+      ),
+      focusColor: AppTheme.primary,
       // labelText: labelText,
-      labelStyle: const TextStyle(
-        color: Color.fromARGB(255, 15, 14, 14)
+      labelStyle: TextStyle(
+        color: borderColor ?? Color.fromARGB(255, 15, 14, 14)
       ),
       prefixIcon: prefixIcon != null
-        ? Icon( prefixIcon, color: Theme.of(context).colorScheme.onPrimary )
+        ? Icon( prefixIcon, color: borderColor ?? Theme.of(context).colorScheme.onPrimary )
         : null,
       suffixIcon: suffixIcon != null
         ? Image(image: AssetImage('assets/icons/$suffixIcon.png'),)

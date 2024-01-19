@@ -11,18 +11,21 @@ class MultimediaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
     return BackgroundWitget(
         widget: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric( horizontal: 30),
+        padding: EdgeInsets.symmetric( horizontal: height * 0.036),
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
-              child: Image(image: AssetImage('assets/logo.png')),
-            ),
+            const SizedBox( height: 50 ),
 
-            SizedBox( height: 10 ),
+            Image(image: AssetImage('assets/logo.png'), width: width * 0.55),
+
+            const SizedBox( height: 50 ),
               
             const Text(
               'RECURSOS MULTIMEDIA',
@@ -85,7 +88,7 @@ class _CardActivity extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(50),
+      borderRadius: BorderRadius.circular(12),
       child: Container(
         // height: 400,
         padding: const EdgeInsets.symmetric( vertical: 20, horizontal: 20 ),

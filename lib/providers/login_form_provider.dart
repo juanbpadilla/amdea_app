@@ -11,6 +11,7 @@ class LoginFormProvider extends ChangeNotifier {
   GlobalKey<FormState> formKey = GlobalKey();
 
   User? _user;
+  String? _role;
 
   String name = '';
   String number = '';
@@ -18,6 +19,8 @@ class LoginFormProvider extends ChangeNotifier {
   String email = '';
   String password = '';
   String passwordConfirmation = '';
+
+  String? get role => _role;
 
   User? get user => _user;
   final AuthService _apiService = AuthService();
@@ -37,7 +40,10 @@ class LoginFormProvider extends ChangeNotifier {
 
   Future<void> fetchUserDetails() async {
     _user = await _apiService.show();
-    print(_user);
+    String? id = _user?.id.toString();
+    _role = await _apiService.permissionShow(id!);
+    // print(_user?.id.toString());
+    // print(_role);
   }
 
   

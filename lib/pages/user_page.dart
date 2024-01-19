@@ -1,14 +1,22 @@
+import 'package:amdea_app/providers/login_form_provider.dart';
 import 'package:amdea_app/theme/app_theme.dart';
 import 'package:amdea_app/ui/input_decorations.dart';
 import 'package:amdea_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    // ignore: unused_local_variable
+    final authProvider = Provider.of<LoginFormProvider>(context, listen: false);
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         titleTextStyle: TextStyle(
@@ -32,39 +40,43 @@ class UserPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 35),
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  // mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
                       children: [
-                        const SizedBox(height: 25,),
-
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width*0.5,
-                          child: const Image(image: AssetImage('assets/logo.png'))
-                        ),
+                        SizedBox(height: height * 0.03),
               
                         Stack(
                           children: [
-                            SvgPicture.asset(
-                              'assets/icons/user-circle.svg',
-                              width: 160,
-                              height: 160,
-                            ),
                             const Positioned(
-                              right: 11,
-                              bottom: 17,
+                              right: 0,
+                              bottom: 0,
                               child: Image(image: AssetImage('assets/icons/edit-05.png'),)
                             ),
+                            
+                            Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: SvgPicture.asset(
+                                'assets/icons/user-circle.svg',
+                                width: width * 0.345,
+                                // height: 180,
+                              ),
+                            ),                            
                           ],
                         ),
+
+                        const SizedBox(height: 15,),
               
-                        primaryText('Omar Cayo', context),
+                        primaryText(
+                          'Omar Cayo', 
+                          // ((height * 0.17).toInt()).toString(),
+                          // ((width * 0.2901).toInt()).toString(),
+                          context
+                        ),
                         
                       ],
                     ),
 
-                    const SizedBox(height: 15),
+                    SizedBox(height: height * 0.02),
               
                     Column(
                       children: [
@@ -74,7 +86,7 @@ class UserPage extends StatelessWidget {
                       ],
                     ),
 
-                    const SizedBox(height: 17),
+                    SizedBox(height: height * 0.02),
 
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,25 +97,20 @@ class UserPage extends StatelessWidget {
                       ],
                     ),
 
-                    const SizedBox( height: 15,),
+                    SizedBox( height: height * 0.02),
 
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          child: Text(
-                            'Universidad Autónoma Juan Misael Saracho',
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: AppTheme.boldFont,
-                              fontSize: 17,
-                              color: Theme.of(context).colorScheme.onPrimary
-                            )
-                          ),
-                        ),
-                        
-                      ],
+                    Container(
+                      width: width * 0.6,
+                      child: Text(
+                        'Universidad Autónoma Juan Misael Saracho',
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: AppTheme.boldFont,
+                          fontSize: 18,
+                          color: Theme.of(context).colorScheme.onPrimary
+                        )
+                      ),
                     )
                   ],
                 ),
@@ -217,20 +224,23 @@ class UserPage extends StatelessWidget {
             },
           ),
 
-          const SizedBox( height: 20 ),
+          const SizedBox( height: 10 ),
 
-          Padding(
-            padding: const EdgeInsets.only(left: 8, right: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                primaryText('Cambiar Contraseña', context),
-                const Image(image: AssetImage('assets/icons/edit-05.png'),),
-              ],
+          TextButton(
+            onPressed: () => displayDialogAndroid(context),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5, right: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  primaryText('Cambiar Contraseña', context),
+                  const Image(image: AssetImage('assets/icons/edit-05.png'),),
+                ],
+              ),
             ),
           ),
 
-          const SizedBox( height: 17 ),
+          const SizedBox( height: 5 ),
 
           CustomButton(
               text: 'Guardar',
@@ -251,6 +261,153 @@ class UserPage extends StatelessWidget {
 
         ],
       )
+    );
+  }
+
+  void displayDialogAndroid(BuildContext context) {
+
+    showDialog(
+      // barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40)
+          ),
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          title: const Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: Text(
+              'Cambiar Contraseña',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: AppTheme.boldFont,
+                color: AppTheme.lightGrayColor,
+                fontSize: 19
+              ),
+            ),
+          ),
+          content: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Form(
+                  child: Column(
+                    children: [
+          
+                      TextFormField(
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontSize: 18,
+                          fontFamily: AppTheme.primaryFont
+                        ),
+                        autocorrect: false,
+                        obscureText: true,
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: InputDecorations.authInputDecoration(
+                          hintText: 'Contraseña actual', 
+                          labelText: 'Contraseña', 
+                          borderColor: AppTheme.background,
+                          fontSize: 16,
+                          prefixIcon: Icons.lock,
+                          context: context,
+                        ),
+                        onChanged: (value) {},
+                        validator: (value) {
+                          return (value != null && value.length >= 5)
+                              ? null
+                              : 'La contraseña debe contener 6 o más caracteres';
+                        },
+                      ),
+          
+                      const SizedBox( height: 5 ),
+          
+                      TextFormField(
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontSize: 18,
+                          fontFamily: AppTheme.primaryFont
+                        ),
+                        autocorrect: false,
+                        obscureText: true,
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: InputDecorations.authInputDecoration(
+                          hintText: 'Nueva Contraseña', 
+                          labelText: 'Contraseña', 
+                          borderColor: AppTheme.background,
+                          fontSize: 16,
+                          prefixIcon: Icons.lock,
+                          context: context,
+                        ),
+                        onChanged: (value) {},
+                        validator: (value) {
+                          return (value != null && value.length >= 5)
+                              ? null
+                              : 'La contraseña debe contener 6 o más caracteres';
+                        },
+                      ),
+          
+                      const SizedBox( height: 5 ),
+          
+                      TextFormField(
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontSize: 18,
+                          fontFamily: AppTheme.primaryFont
+                        ),
+                        autocorrect: false,
+                        obscureText: true,
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: InputDecorations.authInputDecoration(
+                          hintText: 'Confirmar Contraseña', 
+                          labelText: 'Contraseña', 
+                          borderColor: AppTheme.background,
+                          fontSize: 16,
+                          prefixIcon: Icons.lock,
+                          context: context,
+                        ),
+                        onChanged: (value) {},
+                        validator: (value) {
+                          return (value != null && value.length >= 5)
+                              ? null
+                              : 'La contraseña debe contener 6 o más caracteres';
+                        },
+                      ),
+                    ],
+                  )
+                )
+              ],
+            ),
+          ),
+          actions: [
+
+            Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: CustomButton(
+                  text: 'Guardar',
+                  // text: loginForm.isLoading
+                  //   ? 'Espere..'
+                  //   : 'Guardar',
+                  // routeName: loginForm.isLoading ? null : () async {
+                  routeName: () {},
+                  paddingv: 8,
+                  color: AppTheme.primary,
+                  textStyle: const TextStyle(
+                    color: Colors.white ,
+                    fontFamily: AppTheme.mediumFont,
+                    fontSize: 21,
+                    fontWeight: FontWeight.w500
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10,)
+          ],
+        );
+      }
     );
   }
 }

@@ -79,6 +79,29 @@ class AuthService extends ChangeNotifier {
     return user;
   }
 
+  Future<String> permissionShow(String id) async {
+
+    final idToken = await storage.read(key: 'token');
+
+    final url = Uri.http(_baseUrl, '/api/v1/permission/$id');
+    // final url = Uri.https(_baseUrl, '/api/v1/user');
+
+    final resp = await http.get(url, headers: { 
+      'Accept': "application/vnd.api+json",
+      'Authorization': 'Bearer $idToken',
+    });
+
+    final decodedResp = json.decode( resp.body );
+
+    if (resp.statusCode == 401) {
+      return 'error';
+    }
+    print(decodedResp[0].toString());
+    // User user = User.fromMap(decodedResp);
+
+    return decodedResp[0].toString();
+  }
+
   Future logout() async {
 
     final idToken = await storage.read(key: 'token');

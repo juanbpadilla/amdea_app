@@ -27,6 +27,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return TextButton(
+      onPressed: routeName,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(50),
         child: Container(
@@ -36,14 +37,17 @@ class CustomButton extends StatelessWidget {
           // color: const Color(0xFF2C2F88),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              icon != null ? Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: SvgPicture.asset(
-                  'assets/icons/$icon',
-                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                  // height: 70,
-                ),
+              icon != null ? Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/$icon',
+                    colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                    // height: 70,
+                  ),
+                  const SizedBox(width: 5,)
+                ],
               )
               : Container(),
 
@@ -54,8 +58,7 @@ class CustomButton extends StatelessWidget {
             ]
           )
         ),
-      ),
-      onPressed: routeName, 
+      ), 
     );
   }
 }

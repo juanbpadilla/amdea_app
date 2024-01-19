@@ -21,6 +21,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
     // final uiProvider = Provider.of<UiProvider>(context, listen: false);
     final authProvider = Provider.of<LoginFormProvider>(context, listen: false);
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
 
     return SafeArea(
         child: Container(
@@ -46,10 +48,8 @@ class _ProfilePageState extends State<ProfilePage> {
               } else {
                 return Container(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height - 200,
-                  
-                  margin: const EdgeInsets.symmetric( vertical: 20 ),
-                  child: buildColumProfile(context ,authProvider),            
+                  height: height - 200,
+                  child: buildColumProfile(context ,authProvider, width, height),            
                 );
               }
 
@@ -62,48 +62,31 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildDrawerItem(
-      {required String title,
-        Widget? leading,
+      {
+        // required String title,
+        required Widget title,
+        required Widget leading,
         required Function onPressed,
-        Color? color,
-        double fontSize = 25,
-        FontWeight fontWeight = FontWeight.w700,
+        required double width,
         double height = 45,
-        bool isVisible = false}) {
+        bool isVisible = false
+      }
+    ) 
+  {
     return SizedBox(
       height: height,
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(0),
-        minVerticalPadding: 0,
-        dense: true,
-        onTap: () => onPressed(),
-        leading: leading,
-        title: Row(
+      child: TextButton(
+        onPressed: () => onPressed(),
+        child: Row(
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                  fontFamily: AppTheme.boldFont,
-                  fontSize: fontSize, fontWeight: fontWeight,
-                  color: color
-              ),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            isVisible
-                ? const CircleAvatar(
-              backgroundColor: AppTheme.primary,
-              radius: 15,
-              child: Text(
-                '1',
-                style: TextStyle(fontFamily: AppTheme.primaryFont, color: Colors.white),
-              ),
-            )
-                : Container()
+            leading,
+      
+            SizedBox(width: width*0.03),
+      
+            title,
           ],
         ),
-      ),
+      )
     );
   }
 
@@ -146,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         text: 'Confirmar',
                         routeName: () {
                           authService.logout();
-                          uiProvider.selectedMenuOpt = 1;
+                          uiProvider.selectedMenuOpt = 2;
                           Navigator.pushReplacementNamed(context, 'welcome');
                         },
                         color: Colors.green,
@@ -174,8 +157,9 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildColumProfile(BuildContext context, LoginFormProvider authProvider) {
+  Widget buildColumProfile(BuildContext context, LoginFormProvider authProvider, double width, double height) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         InkWell(
           onTap: () {
@@ -186,7 +170,8 @@ class _ProfilePageState extends State<ProfilePage> {
             );
           },
           child: SizedBox(
-            height: 150,
+            height: height * 0.17,
+            width: width,
             child: DrawerHeader(
               decoration: UnderlineTabIndicator(
                 borderSide: BorderSide(
@@ -196,20 +181,26 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _CircleAvatar(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5, right: 10),
+                    child: _CircleAvatar(width: width,),
+                  ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '${authProvider.user?.name}',
+                          '${authProvider.user?.name} ${authProvider.user?.lastname}',
                           // 'Omar Cayo',
+                          // ((height * 0.17).toInt()).toString(),
+                          // ((width * 0.24).toInt()).toString(),
                           style: const TextStyle(
                               fontFamily: AppTheme.boldFont,
                               color: AppTheme.primary,
-                              fontSize: 25
+                              fontSize: 17
                           )
                         ),
                         Row(
@@ -223,13 +214,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                         
-                            const SizedBox(width: 1),
+                            const SizedBox(width: 2),
                         
-                            const Text(
-                              "Estudiante",
-                              style: TextStyle(
+                            Text(
+                              authProvider.role ?? '',
+                              style: const TextStyle(
                                   fontFamily: AppTheme.boldFont,
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   color: AppTheme.greenColor,
                               ),
                               overflow: TextOverflow.ellipsis,
@@ -240,43 +231,68 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.arrow_back_ios, textDirection: TextDirection.rtl, size: 35, color: Theme.of(context).colorScheme.primary,)
-                  )
+                  
+                  SvgPicture.asset(
+                      'assets/icons/arrow.svg',
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.primary,
+                        BlendMode.srcIn,
+                      ),
+                      width: 12.25,
+                      height: 24.5,
+                    ),
                 ],
               )
             ),
           ),
         ),
         const SizedBox(
-          height: 20,
+          height: 5,
         ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: EdgeInsets.symmetric(horizontal: width * 0.035),
           child: Column(
             children: [
               buildDrawerItem(
-                  title: 'Asistencia',
-                  leading: _Icon('check-square.svg'),
-                  onPressed: () {}
+                // title: 'Asistencia',
+                title: Text(
+                  'Asistencia',
+                  style: TextStyle(
+                    fontFamily: AppTheme.boldFont,
+                    fontSize: 23, 
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).colorScheme.primary
+                  ),
+                ),
+                leading: const _Icon('check-square.svg'),
+                width: width,
+                onPressed: () {}
                 // onPressed: () => Get.to(()=> PaymentScreen())
               ),
               buildDrawerItem(
-                title: 'Calificaciones',
+                // title: 'Calificaciones',
+                title: Text(
+                  'Calificaciones',
+                  style: TextStyle(
+                    fontFamily: AppTheme.boldFont,
+                    fontSize: 23, 
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).colorScheme.primary
+                  ),
+                ),
                 leading: _Icon('Doc_15.svg'),
+                width: width,
                 onPressed: () {
                   // Navigator.pushNamed(context, 'places');
                 },
                 // isVisible: true
               ),                
-              _ListSettings(
-                leading: const _Icon('moon.svg'),
-                // title: _SwitchAdaptative(),
+              buildDrawerItem(
+                // title: 'Calificaciones',
                 title: _Switch(
                   buttonSwitch: Switch(
                       // value: Preferences.isDarkmode,
-                      value: true,
+                      value: false,
                       activeColor: AppTheme.primary,
                       onChanged: (value) {
                         // Preferences.isDarkmode = value;
@@ -291,19 +307,45 @@ class _ProfilePageState extends State<ProfilePage> {
                       }
                   ),
                 ),
-              ),
+                leading: _Icon('moon.svg'),
+                width: width,
+                onPressed: () {
+                  // Navigator.pushNamed(context, 'places');
+                },
+                // isVisible: true
+              ),  
               buildDrawerItem(
-                title: 'Ayuda',
+                // title: 'Ayuda',
+                title: Text(
+                  'Ayuda',
+                  style: TextStyle(
+                    fontFamily: AppTheme.boldFont,
+                    fontSize: 23, 
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).colorScheme.primary
+                  ),
+                ),
                 leading: _Icon('help-square.svg'),
+                width: width,
                 onPressed: () {
                   // Navigator.pushNamed(context, 'places');
                 },
                 // isVisible: true
               ),
               buildDrawerItem(
-                  title: 'Cerrar Sesión',
-                  leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.onBackground),
-                  onPressed: () => displayDialogAndroid(context)
+                // title: 'Cerrar Sesión',
+                title: Text(
+                  'Cerrar Sesión',
+                  style: TextStyle(
+                    fontFamily: AppTheme.boldFont,
+                    fontSize: 23, 
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).colorScheme.primary
+                  ),
+                ),
+                leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.onBackground),
+                width: width,
+                onPressed: () => displayDialogAndroid(context)
               ),
             ],
           ),
@@ -315,12 +357,16 @@ class _ProfilePageState extends State<ProfilePage> {
 
 class _CircleAvatar extends StatelessWidget {
 
+  final double width;
+
+  const _CircleAvatar({super.key, required this.width});
+
   @override
   Widget build(BuildContext context) {
     return SvgPicture.asset(
       'assets/icons/user-circle.svg',
-      width: 125,
-      height: 125,
+      width: 90,
+      // height: width * 0.24,
     );
   }
 }
@@ -355,51 +401,23 @@ class _Switch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 45,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Modo Oscuro',
-            style: TextStyle(
-                fontFamily: AppTheme.boldFont,
-                fontSize: 25,
-                color: Theme.of(context).colorScheme.primary
+    return Expanded(
+      child: SizedBox(
+        height: 45,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Modo Oscuro',
+              style: TextStyle(
+                  fontFamily: AppTheme.boldFont,
+                  fontSize: 23,
+                  color: Theme.of(context).colorScheme.primary
+              ),
             ),
-          ),
-          buttonSwitch,
-        ],
-      ),
-    );
-  }
-}
-
-class _ListSettings extends StatelessWidget {
-
-  final Widget leading;
-  final Widget title;
-  final Widget? trailing;
-  final Function()? buttonFunction;
-
-  const _ListSettings({
-    required this.leading,
-    required this.title,
-    this.trailing,
-    this.buttonFunction
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      // height: 45,
-      child: ListTile(
-        focusColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-        onTap: buttonFunction,
-        leading: leading,
-        title: title,
-        trailing: trailing,
-        contentPadding: const EdgeInsets.all( 0 ),
+            buttonSwitch,
+          ],
+        ),
       ),
     );
   }

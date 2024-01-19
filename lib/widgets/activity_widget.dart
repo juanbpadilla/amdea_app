@@ -116,6 +116,7 @@ class _ListActivity extends StatelessWidget {
                 text: 'Resolver',
                 routeName: () => Navigator.pushNamed(context, 'home'),
                 color: Theme.of(context).colorScheme.primary,
+                paddingh: 15,
                 textStyle: const TextStyle(
                     color: Colors.white ,
                     fontFamily: 'Montserrat_Medium',
