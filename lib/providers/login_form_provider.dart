@@ -26,10 +26,17 @@ class LoginFormProvider extends ChangeNotifier {
   final AuthService _apiService = AuthService();
 
   bool _isLoading = false;
+  bool _isSaving = false;
   bool get isLoading => _isLoading;
+  bool get isSaving => _isSaving;
   
   set isLoading( bool value ) {
     _isLoading = value;
+    notifyListeners();
+  }
+  
+  set isSaving( bool value ) {
+    _isSaving = value;
     notifyListeners();
   }
 
@@ -46,6 +53,11 @@ class LoginFormProvider extends ChangeNotifier {
     // print(_role);
   }
 
+  void saveUserData(User newUser) {
+    print(user!.email == '' ? 'no email' : user!.email);
+    print(user!.phone == '' ? 'no phone' : user!.phone);
+    _user = newUser;
+  }
   
 
 }

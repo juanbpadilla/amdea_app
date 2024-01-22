@@ -7,16 +7,13 @@ class BackgroundWitget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          color: Theme.of(context).colorScheme.background,
-          child: widget,
-        )
-      ),
+    return SafeArea(
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: Theme.of(context).colorScheme.background,
+        child: widget,
+      )
     );
   }
 }

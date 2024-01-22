@@ -1,4 +1,7 @@
+import 'package:amdea_app/models/user.dart';
 import 'package:amdea_app/providers/login_form_provider.dart';
+import 'package:amdea_app/sercices/auth_service.dart';
+import 'package:amdea_app/sercices/notifications_service.dart';
 import 'package:amdea_app/theme/app_theme.dart';
 import 'package:amdea_app/ui/input_decorations.dart';
 import 'package:amdea_app/widgets/widgets.dart';
@@ -7,17 +10,22 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class UserPage extends StatelessWidget {
-  const UserPage({super.key});
+
+  final LoginFormProvider authProvider;
+
+  const UserPage({
+    required this.authProvider
+  });
 
   @override
   Widget build(BuildContext context) {
 
     // ignore: unused_local_variable
-    final authProvider = Provider.of<LoginFormProvider>(context, listen: false);
+    // final authProvider = Provider.of<LoginFormProvider>(context, listen: false);
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
+    return Scaffold( 
       appBar: AppBar(
         titleTextStyle: TextStyle(
           fontFamily: AppTheme.mediumFont,
@@ -67,7 +75,8 @@ class UserPage extends StatelessWidget {
                         const SizedBox(height: 15,),
               
                         primaryText(
-                          'Omar Cayo', 
+                          // 'Omar Cayo', 
+                          '${authProvider.user?.name} ${authProvider.user?.lastname}',
                           // ((height * 0.17).toInt()).toString(),
                           // ((width * 0.2901).toInt()).toString(),
                           context
@@ -80,7 +89,7 @@ class UserPage extends StatelessWidget {
               
                     Column(
                       children: [
-                        listRow('graduation-hat-01', 'Estudiante', context),
+                        listRow('graduation-hat-01', authProvider.role ?? '', context),
                         listRow('pin-01', 'Publicidad', context),
                         listRow('bookmark-check', 'Ingeniería Comercial', context),
                       ],
@@ -93,7 +102,7 @@ class UserPage extends StatelessWidget {
                       children: [
                         primaryText('Agregar contactos', context),
                         const SizedBox(height: 5),
-                        contactForm(context)                    
+                        contactForm(context, authProvider)                    
                       ],
                     ),
 
@@ -167,8 +176,10 @@ class UserPage extends StatelessWidget {
     );
   }
 
-  Widget contactForm(BuildContext context) {
+  Widget contactForm(BuildContext context, LoginFormProvider authProvider) {
     return Form(
+      key: authProvider.formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
 
@@ -187,12 +198,13 @@ class UserPage extends StatelessWidget {
               suffixIcon: 'edit-05',
               context: context,
             ),
-            onChanged: (value) {},
-            validator: (value) {
-              return (value != null && value.length >= 5)
-                  ? null
-                  : 'La contraseña debe contener 6 o más caracteres';
-            },
+            onChanged: (value) => authProvider.user!.phone = value,
+            initialValue: authProvider.user?.phone ?? '',
+            // validator: (value) {
+            //   return (value != null && value.length >= 1)
+            //       ? null
+            //       : 'El telé debe contener 6 o más caracteres';
+            // },
           ),
 
           const SizedBox( height: 8 ),
@@ -212,15 +224,21 @@ class UserPage extends StatelessWidget {
               suffixIcon: 'edit-05',
               context: context,
             ),
-            onChanged: (value) {},
+            onChanged: (value) => authProvider.user!.email = value,
+            initialValue: authProvider.user?.email ?? '',
             validator: (value) {
-              String pattern =
+              if (value == '') {
+                return null;
+              } else {
+                String pattern =
                   r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-              RegExp regExp = RegExp(pattern);
+                RegExp regExp = RegExp(pattern);
 
-              return regExp.hasMatch(value ?? '')
-                  ? null
-                  : 'El valor ingresado no es un correo';
+                return regExp.hasMatch(value ?? '')
+                    ? null
+                    : 'El valor ingresado no es un correo';
+              }
+              
             },
           ),
 
@@ -243,14 +261,33 @@ class UserPage extends StatelessWidget {
           const SizedBox( height: 5 ),
 
           CustomButton(
+              // text: 'Guardar',
               text: 'Guardar',
-              // text: loginForm.isLoading
-              //   ? 'Espere..'
-              //   : 'Guardar',
-              // routeName: loginForm.isLoading ? null : () async {
-              routeName: () {},
+              routeName: authProvider.isLoading ? null : () async {
+                FocusScope.of(context).unfocus();
+                final authService = Provider.of<AuthService>(context, listen: false);
+
+                if (!authProvider.isValidForm()) return;
+
+                authProvider.isLoading = true;
+
+                final User? newUser = await authService.updateUser(authProvider.user!);
+
+                if ( newUser != null ) {
+
+                  authProvider.saveUserData(newUser);
+
+                  authProvider.isLoading = false;
+                  const String errorMessage = 'Información actualizada con exito!';
+                  NotificationsService.showSnackbar(errorMessage, Theme.of(context).colorScheme.onBackground, Theme.of(context).colorScheme.background);
+                } else {
+                  print("Algo salio mal");
+                  authProvider.isLoading = false;
+                }
+
+              },
               paddingv: 6,
-              color: AppTheme.primary,
+              color: Theme.of(context).colorScheme.primary,
               textStyle: const TextStyle(
                 color: Colors.white ,
                 fontFamily: AppTheme.mediumFont,

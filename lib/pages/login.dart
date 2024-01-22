@@ -9,6 +9,8 @@ class LoginPage extends StatelessWidget {
       backgroundColor: Theme.of(context).primaryColor,
       body: BackgroundWitget(
         widget: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          // physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.all(0.8),
             child: Container(

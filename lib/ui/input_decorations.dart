@@ -31,6 +31,9 @@ class InputDecorations {
         color: borderColor ?? Color.fromARGB(255, 15, 14, 14),
         fontSize: fontSize,
       ),
+      errorStyle: TextStyle(
+        fontSize: 14
+      ),
       focusColor: AppTheme.primary,
       // labelText: labelText,
       labelStyle: TextStyle(

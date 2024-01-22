@@ -102,6 +102,38 @@ class AuthService extends ChangeNotifier {
     return decodedResp[0].toString();
   }
 
+  Future<User?> updateUser( User user ) async {
+    final idToken = await storage.read(key: 'token');
+
+    print(user.id);
+    print(idToken);
+
+    final Map<String, dynamic> authData = {
+      'email': user.email,
+      'phone': user.phone
+    };
+
+    final url = Uri.http(_baseUrl, '/api/v1/update/${user.id}');
+
+    final resp = await http.patch(url, headers: { 
+      'Accept': _accept,
+      'Authorization': 'Bearer $idToken',
+    }, body: authData );
+
+    final decodedResp = json.decode( resp.body );
+
+    print(resp.body);
+
+    if (resp.statusCode == 401) {
+      print('error al guardar!');
+      return user;
+    }
+
+    User userUpdated = User.fromMap(decodedResp);
+
+    return userUpdated;
+  }
+
   Future logout() async {
 
     final idToken = await storage.read(key: 'token');

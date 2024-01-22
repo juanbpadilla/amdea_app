@@ -1,4 +1,5 @@
 import 'package:amdea_app/pages/check_auth_page.dart';
+import 'package:amdea_app/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -163,10 +164,10 @@ class _ProfilePageState extends State<ProfilePage> {
       children: [
         InkWell(
           onTap: () {
-            Navigator.pushNamed(
+            Navigator.push(
               context, 
-              'user',
-              // arguments: { 'name': user.name, 'email': user.email }
+              MaterialPageRoute(builder: (context) => UserPage(authProvider: authProvider,)),
+              // arguments: { 'authProvider': authProvider}
             );
           },
           child: SizedBox(
