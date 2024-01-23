@@ -1,3 +1,4 @@
+import 'package:amdea_app/providers/ui_provider.dart';
 import 'package:amdea_app/theme/app_theme.dart';
 import 'package:amdea_app/ui/input_decorations.dart';
 import 'package:amdea_app/widgets/custom_button.dart';
@@ -14,6 +15,7 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final loginForm = Provider.of<LoginFormProvider>(context);
+    final uiProvider = Provider.of<UiProvider>(context, listen: false);
 
     return Form(
 
@@ -73,16 +75,6 @@ class LoginForm extends StatelessWidget {
 
           const SizedBox( height: 30 ),
 
-          // FormButton( 
-          //   // routeName: 'home',
-          //   name: 'Acceder',
-          //   color: AppTheme.primary,
-          //   textStyle: Theme.of(context).textTheme.headlineSmall,
-          //   loginForm: () {
-          //     // Navigation
-          //   }
-          // ),
-
           CustomButton(
               text: loginForm.isLoading
                 ? 'Espere..'
@@ -106,6 +98,7 @@ class LoginForm extends StatelessWidget {
                   if ( errorMessage == null ) {
                     // ignore: use_build_context_synchronously
                     loginForm.isLoading = false;
+                    uiProvider.selectedMenuOpt = 2;
                     Navigator.pushReplacementNamed(context, 'home');
                   } else {
                     //  TODO: mostrar error en pantalla

@@ -134,6 +134,38 @@ class AuthService extends ChangeNotifier {
     return userUpdated;
   }
 
+  Future<String?> updatePassword( String id, String old_password, String password, String passwordConfirmation ) async {
+    // final idToken = await storage.read(key: 'token');
+
+    print(id);
+    // print(idToken);
+
+    final Map<String, dynamic> authData = {
+      'old_password': old_password,
+      'password': password,
+      'password_confirmation': passwordConfirmation,
+      'device_name': 'deviceName-phone'
+    };
+
+    final url = Uri.http(_baseUrl, '/api/v1/user/$id/update-password');
+
+    final resp = await http.put(url, headers: { 
+      'Accept': _accept,
+      // 'Authorization': 'Bearer $idToken',
+    }, body: authData );
+
+    // final decodedResp = json.decode( resp.body );
+
+    print(resp.body);
+    final Map<String, dynamic> decodedResp = json.decode( resp.body );
+    if ( decodedResp.containsKey('plain-text-token') ) {
+      await storage.write(key: 'token', value: decodedResp['plain-text-token']);
+      return null;
+    } else {
+      return decodedResp['message'];
+    }
+  }
+
   Future logout() async {
 
     final idToken = await storage.read(key: 'token');

@@ -1,5 +1,6 @@
 import 'package:amdea_app/models/user.dart';
 import 'package:amdea_app/providers/login_form_provider.dart';
+import 'package:amdea_app/providers/update_form_provider.dart';
 import 'package:amdea_app/sercices/auth_service.dart';
 import 'package:amdea_app/sercices/notifications_service.dart';
 import 'package:amdea_app/theme/app_theme.dart';
@@ -20,8 +21,6 @@ class UserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // ignore: unused_local_variable
-    // final authProvider = Provider.of<LoginFormProvider>(context, listen: false);
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
 
@@ -195,16 +194,11 @@ class UserPage extends StatelessWidget {
               hintText: 'Celular', 
               labelText: 'Celular', 
               prefixIcon: Icons.phone_outlined,
-              suffixIcon: 'edit-05',
+              suffixIcon: Image(image: AssetImage('assets/icons/edit-05.png'),),
               context: context,
             ),
             onChanged: (value) => authProvider.user!.phone = value,
             initialValue: authProvider.user?.phone ?? '',
-            // validator: (value) {
-            //   return (value != null && value.length >= 1)
-            //       ? null
-            //       : 'El telé debe contener 6 o más caracteres';
-            // },
           ),
 
           const SizedBox( height: 8 ),
@@ -221,7 +215,7 @@ class UserPage extends StatelessWidget {
               hintText: 'Correo', 
               labelText: 'Correo', 
               prefixIcon: Icons.email_outlined,
-              suffixIcon: 'edit-05',
+              suffixIcon: Image(image: AssetImage('assets/icons/edit-05.png'),),
               context: context,
             ),
             onChanged: (value) => authProvider.user!.email = value,
@@ -245,7 +239,13 @@ class UserPage extends StatelessWidget {
           const SizedBox( height: 10 ),
 
           TextButton(
-            onPressed: () => displayDialogAndroid(context),
+            onPressed: () {
+              final passUpdate = Provider.of<UpdateFormProvider>(context, listen: false);
+
+              passUpdate.obscureText = true;
+
+              displayDialogAndroid(context, authProvider);
+            },
             child: Padding(
               padding: const EdgeInsets.only(left: 5, right: 5),
               child: Row(
@@ -301,148 +301,200 @@ class UserPage extends StatelessWidget {
     );
   }
 
-  void displayDialogAndroid(BuildContext context) {
+  void displayDialogAndroid(BuildContext context, LoginFormProvider authProvider) {
 
     showDialog(
       // barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40)
-          ),
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
-          title: const Padding(
-            padding: EdgeInsets.only(top: 10),
-            child: Text(
-              'Cambiar Contraseña',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: AppTheme.boldFont,
-                color: AppTheme.lightGrayColor,
-                fontSize: 19
+        return Consumer<UpdateFormProvider>(
+          builder: (context, updateFormProvider, child) {
+            return AlertDialog(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40)
               ),
-            ),
-          ),
-          content: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Form(
-                  child: Column(
-                    children: [
-          
-                      TextFormField(
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontSize: 18,
-                          fontFamily: AppTheme.primaryFont
-                        ),
-                        autocorrect: false,
-                        obscureText: true,
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecorations.authInputDecoration(
-                          hintText: 'Contraseña actual', 
-                          labelText: 'Contraseña', 
-                          borderColor: AppTheme.background,
-                          fontSize: 16,
-                          prefixIcon: Icons.lock,
-                          context: context,
-                        ),
-                        onChanged: (value) {},
-                        validator: (value) {
-                          return (value != null && value.length >= 5)
-                              ? null
-                              : 'La contraseña debe contener 6 o más caracteres';
-                        },
-                      ),
-          
-                      const SizedBox( height: 5 ),
-          
-                      TextFormField(
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontSize: 18,
-                          fontFamily: AppTheme.primaryFont
-                        ),
-                        autocorrect: false,
-                        obscureText: true,
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecorations.authInputDecoration(
-                          hintText: 'Nueva Contraseña', 
-                          labelText: 'Contraseña', 
-                          borderColor: AppTheme.background,
-                          fontSize: 16,
-                          prefixIcon: Icons.lock,
-                          context: context,
-                        ),
-                        onChanged: (value) {},
-                        validator: (value) {
-                          return (value != null && value.length >= 5)
-                              ? null
-                              : 'La contraseña debe contener 6 o más caracteres';
-                        },
-                      ),
-          
-                      const SizedBox( height: 5 ),
-          
-                      TextFormField(
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontSize: 18,
-                          fontFamily: AppTheme.primaryFont
-                        ),
-                        autocorrect: false,
-                        obscureText: true,
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecorations.authInputDecoration(
-                          hintText: 'Confirmar Contraseña', 
-                          labelText: 'Contraseña', 
-                          borderColor: AppTheme.background,
-                          fontSize: 16,
-                          prefixIcon: Icons.lock,
-                          context: context,
-                        ),
-                        onChanged: (value) {},
-                        validator: (value) {
-                          return (value != null && value.length >= 5)
-                              ? null
-                              : 'La contraseña debe contener 6 o más caracteres';
-                        },
-                      ),
-                    ],
-                  )
-                )
-              ],
-            ),
-          ),
-          actions: [
-
-            Center(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.5,
-                child: CustomButton(
-                  text: 'Guardar',
-                  // text: loginForm.isLoading
-                  //   ? 'Espere..'
-                  //   : 'Guardar',
-                  // routeName: loginForm.isLoading ? null : () async {
-                  routeName: () {},
-                  paddingv: 8,
-                  color: AppTheme.primary,
-                  textStyle: const TextStyle(
-                    color: Colors.white ,
-                    fontFamily: AppTheme.mediumFont,
-                    fontSize: 21,
-                    fontWeight: FontWeight.w500
+              backgroundColor: Theme.of(context).colorScheme.onPrimary,
+              title: const Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Text(
+                  'Cambiar Contraseña',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: AppTheme.boldFont,
+                    color: AppTheme.lightGrayColor,
+                    fontSize: 19
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 10,)
-          ],
+              content: Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Form(
+                      key: updateFormProvider.formKey,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      child: Column(
+                        children: [
+              
+                          TextFormField(
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontSize: 18,
+                              fontFamily: AppTheme.primaryFont
+                            ),
+                            autocorrect: false,
+                            obscureText: updateFormProvider.obscureText,
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: InputDecorations.authInputDecoration(
+                              hintText: 'Contraseña actual', 
+                              labelText: 'Contraseña', 
+                              borderColor: AppTheme.background,
+                              fontSize: 16,
+                              prefixIcon: Icons.lock,
+                              context: context,
+                              suffixIcon: IconButton(
+                                icon: Icon(updateFormProvider.obscureText ? Icons.visibility_off : Icons.visibility),
+                                onPressed: () {
+                                    updateFormProvider.toggleVisibility();
+                                },
+                              ),
+                            ),
+                            onChanged: (value) => updateFormProvider.old_password = value,
+                            validator: (value) {
+                              return (value != null && value.length >= 5)
+                                  ? null
+                                  : 'Debe tener 5 o más caracteres';
+                            },
+                          ),
+              
+                          const SizedBox( height: 5 ),
+              
+                          TextFormField(
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontSize: 18,
+                              fontFamily: AppTheme.primaryFont
+                            ),
+                            autocorrect: false,
+                            obscureText: updateFormProvider.obscureText,
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: InputDecorations.authInputDecoration(
+                              hintText: 'Nueva Contraseña', 
+                              labelText: 'Contraseña', 
+                              borderColor: AppTheme.background,
+                              fontSize: 16,
+                              prefixIcon: Icons.lock,
+                              context: context,
+                            ),
+                            onChanged: (value) => updateFormProvider.password = value,
+                            validator: (value) {
+                              return (value != null && value.length >= 5)
+                                  ? null
+                                  : 'Debe tener 5 o más caracteres';
+                            },
+                          ),
+              
+                          const SizedBox( height: 5 ),
+              
+                          TextFormField(
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontSize: 18,
+                              fontFamily: AppTheme.primaryFont
+                            ),
+                            autocorrect: false,
+                            obscureText: updateFormProvider.obscureText,
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: InputDecorations.authInputDecoration(
+                              hintText: 'Confirmar Contraseña', 
+                              labelText: 'Contraseña', 
+                              borderColor: AppTheme.background,
+                              fontSize: 16,
+                              prefixIcon: Icons.lock,
+                              context: context,
+                            ),
+                            onChanged: (value) => updateFormProvider.passwordConfirmation = value,
+                            validator: (value) {
+                              return (value != null && value == updateFormProvider.password)
+                                ? null
+                                : 'Las contraseñas no coinciden';
+                            },
+                          ),
+                        ],
+                      )
+                    )
+                  ],
+                ),
+              ),
+              actions: [
+
+                Center(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: CustomButton(
+                      text: 'Guardar',
+                      routeName: updateFormProvider.isLoading ? null : () async {
+                        FocusScope.of(context).unfocus();
+                        final authService = Provider.of<AuthService>(context, listen: false);
+
+                        if (!updateFormProvider.isValidForm()) return;
+
+                        updateFormProvider.isLoading = true;
+
+                        // final User? newUser = await authService.updateUser(updateFormProvider.user!);
+
+                        print(
+                          authProvider.user!.id.toString()
+                        );
+                        print(
+                          updateFormProvider.old_password
+                        );
+                        print(
+                          updateFormProvider.password
+                        );
+                        print(
+                          updateFormProvider.passwordConfirmation
+                        );
+
+                        final String? errorMessage = await authService.updatePassword(
+                          authProvider.user!.id.toString(),
+                          updateFormProvider.old_password,
+                          updateFormProvider.password,
+                          updateFormProvider.passwordConfirmation
+                        );
+
+                        if ( errorMessage == null ) {
+
+                          // updateFormProvider.saveUserData(newUser);
+
+                          updateFormProvider.isLoading = false;
+                          const String errorMessage = 'Información actualizada con exito!';
+                          Navigator.pop(context);
+                          NotificationsService.showSnackbar(errorMessage, Theme.of(context).colorScheme.onBackground, Theme.of(context).colorScheme.background);
+                        } else {
+                          print(errorMessage);
+                          NotificationsService.showSnackbar(errorMessage, Theme.of(context).colorScheme.onBackground, Theme.of(context).colorScheme.background);
+                          updateFormProvider.isLoading = false;
+                        }
+
+                      },
+                      paddingv: 8,
+                      color: AppTheme.primary,
+                      textStyle: const TextStyle(
+                        color: Colors.white ,
+                        fontFamily: AppTheme.mediumFont,
+                        fontSize: 21,
+                        fontWeight: FontWeight.w500
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10,)
+              ],
+            );
+          }
         );
       }
     );

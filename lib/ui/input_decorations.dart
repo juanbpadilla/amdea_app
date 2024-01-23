@@ -11,7 +11,7 @@ class InputDecorations {
     Color? borderColor,
     double fontSize = 18,
     IconData? prefixIcon,
-    String? suffixIcon,
+    Widget? suffixIcon,
     FocusNode? focusNode,
   }) {
     return InputDecoration(
@@ -43,7 +43,7 @@ class InputDecorations {
         ? Icon( prefixIcon, color: borderColor ?? Theme.of(context).colorScheme.onPrimary )
         : null,
       suffixIcon: suffixIcon != null
-        ? Image(image: AssetImage('assets/icons/$suffixIcon.png'),)
+        ? suffixIcon
         : null,
     );
   }

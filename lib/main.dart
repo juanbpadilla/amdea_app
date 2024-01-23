@@ -2,6 +2,7 @@ import 'package:amdea_app/pages/check_auth_page.dart';
 import 'package:amdea_app/pages/pages.dart';
 import 'package:amdea_app/providers/login_form_provider.dart';
 import 'package:amdea_app/providers/ui_provider.dart';
+import 'package:amdea_app/providers/update_form_provider.dart';
 import 'package:amdea_app/sercices/auth_service.dart';
 import 'package:amdea_app/sercices/book_service.dart';
 import 'package:amdea_app/share_preferences/preferences.dart';
@@ -24,6 +25,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => BookService()),
       ChangeNotifierProvider(create: ( _ ) => AuthService()),
       ChangeNotifierProvider(create: ( _ ) => LoginFormProvider()),
+      ChangeNotifierProvider(create: ( _ ) => UpdateFormProvider())
     ],
     child: const MyApp(),
   ));
