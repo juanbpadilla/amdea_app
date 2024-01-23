@@ -1,13 +1,16 @@
 import 'dart:convert';
 
 import 'package:amdea_app/models/libro.dart';
+import 'package:amdea_app/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class BookService extends ChangeNotifier {
-  final String _baseUrl = "10.0.2.2:8000";
+  final String _baseUrl = AppConstants.baseUrl;
   final String _accept = "application/vnd.api+json";
-  // final String _baseUrl = "790b-2800-cd0-df4f-1600-c54c-6ee-376a-d1c9.ngrok-free.app";
+
+  // Uri uri(_baseUrl, link) => Uri.http(_baseUrl, link);
+  Uri uri(_baseUrl, link) => Uri.https(_baseUrl, link);
 
   List<Libro> libros = [];
   bool isLoading = true;
@@ -24,8 +27,7 @@ class BookService extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final url = Uri.http(_baseUrl, '/api/v1/books');
-    // final url = Uri.https(_baseUrl, '/api/books');
+    final url = uri(_baseUrl, '/api/v1/books');
     final response = await http.get( url, headers: { 'Accept': _accept } );
 
     if ( response.statusCode != 200 ) {

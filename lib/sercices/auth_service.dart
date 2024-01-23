@@ -1,17 +1,20 @@
 import 'dart:convert';
 
 import 'package:amdea_app/models/user.dart';
+import 'package:amdea_app/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService extends ChangeNotifier {
 
-  final String _baseUrl = "10.0.2.2:8000";
-  // final String _baseUrl = AppConstants.baseUrl;
+  final String _baseUrl = AppConstants.baseUrl;
   final String _accept = "application/json";
 
   final storage = const FlutterSecureStorage();
+
+  // Uri uri(_baseUrl, link) => Uri.http(_baseUrl, link);
+  Uri uri(_baseUrl, link) => Uri.https(_baseUrl, link);
 
   Future<String?> createUser(
     String name, String email, String password, String passwordConfirmation,
@@ -23,8 +26,7 @@ class AuthService extends ChangeNotifier {
       'password_confirmation': passwordConfirmation,
       'device_name': 'deviceName-$name'
     };
-    final url = Uri.http(_baseUrl, '/api/v1/register');
-    // final url = Uri.https(_baseUrl, '/api/v1/register');
+    final url = uri(_baseUrl, '/api/v1/register');
     final resp = await http.post(url, headers: { 'Accept': _accept }, body: authData);
     final Map<String, dynamic> decodedResp = json.decode( resp.body );
     if ( decodedResp.containsKey('plain-text-token') ) {
@@ -44,8 +46,7 @@ class AuthService extends ChangeNotifier {
       'password': password,
       'device_name': 'deviceName-phone'
     };
-    final url = Uri.http(_baseUrl, '/api/v1/login');
-    // final url = Uri.https(_baseUrl, '/api/v1/login');
+    final url = uri(_baseUrl, '/api/v1/login');
     final resp = await http.post(url, headers: { 'Accept': _accept }, body: authData);
     final Map<String, dynamic> decodedResp = json.decode( resp.body );
     if ( decodedResp.containsKey('plain-text-token') ) {
@@ -60,8 +61,7 @@ class AuthService extends ChangeNotifier {
 
     final idToken = await storage.read(key: 'token');
 
-    final url = Uri.http(_baseUrl, '/api/v1/user');
-    // final url = Uri.https(_baseUrl, '/api/v1/user');
+    final url = uri(_baseUrl, '/api/v1/user');
 
     final resp = await http.get(url, headers: { 
       'Accept': _accept,
@@ -83,8 +83,7 @@ class AuthService extends ChangeNotifier {
 
     final idToken = await storage.read(key: 'token');
 
-    final url = Uri.http(_baseUrl, '/api/v1/permission/$id');
-    // final url = Uri.https(_baseUrl, '/api/v1/user');
+    final url = uri(_baseUrl, '/api/v1/permission/$id');
 
     final resp = await http.get(url, headers: { 
       'Accept': "application/vnd.api+json",
@@ -113,7 +112,7 @@ class AuthService extends ChangeNotifier {
       'phone': user.phone
     };
 
-    final url = Uri.http(_baseUrl, '/api/v1/update/${user.id}');
+    final url = uri(_baseUrl, '/api/v1/update/${user.id}');
 
     final resp = await http.patch(url, headers: { 
       'Accept': _accept,
@@ -135,10 +134,8 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<String?> updatePassword( String id, String old_password, String password, String passwordConfirmation ) async {
-    // final idToken = await storage.read(key: 'token');
 
     print(id);
-    // print(idToken);
 
     final Map<String, dynamic> authData = {
       'old_password': old_password,
@@ -147,14 +144,11 @@ class AuthService extends ChangeNotifier {
       'device_name': 'deviceName-phone'
     };
 
-    final url = Uri.http(_baseUrl, '/api/v1/user/$id/update-password');
+    final url = uri(_baseUrl, '/api/v1/user/$id/update-password');
 
     final resp = await http.put(url, headers: { 
       'Accept': _accept,
-      // 'Authorization': 'Bearer $idToken',
     }, body: authData );
-
-    // final decodedResp = json.decode( resp.body );
 
     print(resp.body);
     final Map<String, dynamic> decodedResp = json.decode( resp.body );
@@ -169,15 +163,12 @@ class AuthService extends ChangeNotifier {
   Future logout() async {
 
     final idToken = await storage.read(key: 'token');
-    final url = Uri.http(_baseUrl, '/api/v1/logout');
-    // final url = Uri.https(_baseUrl, '/api/v1/logout');
+    final url = uri(_baseUrl, '/api/v1/logout');
 
     final resp = await http.post(url, headers: { 
       'Accept': _accept,
       'Authorization': 'Bearer $idToken',
     });
-
-    // final Map<String, dynamic> decodedResp = json.decode( resp.body );
 
     print(resp.statusCode);
 
