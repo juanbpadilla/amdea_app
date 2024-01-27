@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
         'profile': (_) => ProfilePage(),
         // 'user': (_) => UserPage(),
         'activity': (_) => const ActivityWidget(),
+        'attendance': (_) => AttendancePage()
       },
       scaffoldMessengerKey: NotificationsService.messengerKey,
       theme: Provider.of<ThemeProvider>(context).currentTheme,

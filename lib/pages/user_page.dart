@@ -25,7 +25,6 @@ class UserPage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.primary,
         titleTextStyle: TextStyle(
             fontFamily: AppTheme.mediumFont,
-            // color: Theme.of(context).colorScheme.background,
             color: Theme.of(context).colorScheme.background,
             fontSize: 25),
         centerTitle: true,
@@ -242,34 +241,34 @@ class UserPage extends StatelessWidget {
               // text: 'Guardar',
               text: 'Guardar',
               routeName: authProvider.isLoading
-                  ? null
-                  : () async {
-                      FocusScope.of(context).unfocus();
-                      final authService =
-                          Provider.of<AuthService>(context, listen: false);
+              ? null
+              : () async {
+                FocusScope.of(context).unfocus();
+                final authService =
+                    Provider.of<AuthService>(context, listen: false);
 
-                      if (!authProvider.isValidForm()) return;
+                if (!authProvider.isValidForm()) return;
 
-                      authProvider.isLoading = true;
+                authProvider.isLoading = true;
 
-                      final User? newUser =
-                          await authService.updateUser(authProvider.user!);
+                final User? newUser =
+                    await authService.updateUser(authProvider.user!);
 
-                      if (newUser != null) {
-                        authProvider.saveUserData(newUser);
+                if (newUser != null) {
+                  authProvider.saveUserData(newUser);
 
-                        authProvider.isLoading = false;
-                        const String errorMessage =
-                            'Información actualizada con exito!';
-                        NotificationsService.showSnackbar(
-                            errorMessage,
-                            Theme.of(context).colorScheme.onBackground,
-                            Theme.of(context).colorScheme.background);
-                      } else {
-                        print("Algo salio mal");
-                        authProvider.isLoading = false;
-                      }
-                    },
+                  authProvider.isLoading = false;
+                  const String errorMessage =
+                      'Información actualizada con exito!';
+                  NotificationsService.showSnackbar(
+                      errorMessage,
+                      Theme.of(context).colorScheme.onBackground,
+                      Theme.of(context).colorScheme.background);
+                } else {
+                  print("Algo salio mal");
+                  authProvider.isLoading = false;
+                }
+              },
               paddingv: 6,
               color: Theme.of(context).colorScheme.primary,
               textStyle: const TextStyle(

@@ -8,7 +8,7 @@ class AppTheme {
   static const Color background = Colors.white;
   // static const Color grayColor = Color(0xFFC7C7C7);
   static const Color grayColor = Color(0xFFA6A6A6);
-  static const Color greenColor = Color(0xFF289618);
+  static const Color greenColor = Color(0xFF2FAC1C);
 
   static const String primaryFont ='Montserrat';
   static const String blackFont ='Montserrat_Black';

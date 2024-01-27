@@ -1,7 +1,9 @@
+import 'package:amdea_app/sercices/auth_service.dart';
 import 'package:amdea_app/theme/app_theme.dart';
 import 'package:amdea_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({
@@ -32,8 +34,14 @@ class HomeWidget extends StatelessWidget {
               child: CustomButton(
                 text: 'Marcar Asistencia',
                 icon: 'check-square.svg',
-                routeName: () => Navigator.pushNamed(context, 'home'),
-                color: const Color(0xFF289618),
+                routeName: () async {
+                  final authService = Provider.of<AuthService>(context, listen: false);
+
+                  await authService.showAttendances();
+
+                  // Navigator.pushNamed(context, 'attendance')
+                },
+                color: AppTheme.greenColor,
                 paddingv: height * 0.012,
                 paddingh: 2,
                 textStyle: const TextStyle(

@@ -5,12 +5,14 @@ import 'package:provider/provider.dart';
 
 import '../widgets/widgets.dart';
 
+// ignore: use_key_in_widget_constructors
 class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
+      // ignore: prefer_const_constructors
       body: _HomePageBody(),
 
       bottomNavigationBar: HomeBottomNavigationBar()
@@ -19,7 +21,6 @@ class HomePage extends StatelessWidget {
 }
 
 class _HomePageBody extends StatelessWidget {
-  const _HomePageBody({super.key});
 
   @override
   Widget build(BuildContext context) {

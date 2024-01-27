@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'pages.dart';
 
+// ignore: use_key_in_widget_constructors
 class CheckAuthPage extends StatelessWidget {
 
   @override

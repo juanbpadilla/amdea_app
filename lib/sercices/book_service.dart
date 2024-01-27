@@ -9,8 +9,8 @@ class BookService extends ChangeNotifier {
   final String _baseUrl = AppConstants.baseUrl;
   final String _accept = "application/vnd.api+json";
 
-  // Uri uri(_baseUrl, link) => Uri.http(_baseUrl, link);
-  Uri uri(_baseUrl, link) => Uri.https(_baseUrl, link);
+  Uri uri(_baseUrl, link) => Uri.http(_baseUrl, link);
+  // Uri uri(_baseUrl, link) => Uri.https(_baseUrl, link);
 
   List<Libro> libros = [];
   bool isLoading = true;

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:amdea_app/models/attendance.dart';
 import 'package:amdea_app/models/user.dart';
 import 'package:amdea_app/utils/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +12,13 @@ class AuthService extends ChangeNotifier {
   final String _baseUrl = AppConstants.baseUrl;
   final String _accept = "application/json";
 
+  List<Attendance> attendances = [];
+  late Attendance attendance;
+
   final storage = const FlutterSecureStorage();
 
-  // Uri uri(_baseUrl, link) => Uri.http(_baseUrl, link);
-  Uri uri(_baseUrl, link) => Uri.https(_baseUrl, link);
+  Uri uri(_baseUrl, link) => Uri.http(_baseUrl, link);
+  // Uri uri(_baseUrl, link) => Uri.https(_baseUrl, link);
 
   Future<String?> createUser(
     String name, String email, String password, String passwordConfirmation,
@@ -158,6 +162,36 @@ class AuthService extends ChangeNotifier {
     } else {
       return decodedResp['message'];
     }
+  }
+
+  Future<List<Attendance>?> showAttendances() async {
+    final idToken = await storage.read(key: 'token');
+
+    final url = uri(_baseUrl, '/api/v1/users/37d28f79-3b59-4cb6-a34f-abc10334c017/attendances');
+
+    final resp = await http.get(url, headers: { 
+      'Accept': _accept,
+      'Authorization': 'Bearer $idToken',
+    });
+
+    if (resp.statusCode != 200) {
+      print('error');
+      return null;
+    }
+
+    List<dynamic> jsonResponseList = jsonDecode(resp.body);
+    // print(jsonResponseList.length);
+    for(var element in jsonResponseList){
+      String aux = jsonEncode(element);
+      attendance = Attendance.fromJson(aux);
+      print(attendance.lesson.lesson);
+      attendances.add(attendance);
+    }
+
+    print(attendances[0].lesson.inicio);
+    print(attendances[1].lesson.fin);
+
+    return attendances;
   }
 
   Future logout() async {

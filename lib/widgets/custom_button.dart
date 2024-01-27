@@ -10,6 +10,7 @@ class CustomButton extends StatelessWidget {
   final String? icon;
   final double? paddingv;
   final double? paddingh;
+  final double? circular;
 
   const CustomButton({
     super.key, 
@@ -19,7 +20,8 @@ class CustomButton extends StatelessWidget {
     required this.textStyle, 
     this.icon, 
     this.paddingv, 
-    this.paddingh
+    this.paddingh,
+    this.circular
   });
 
 
@@ -29,7 +31,7 @@ class CustomButton extends StatelessWidget {
     return TextButton(
       onPressed: routeName,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(circular ?? 50),
         child: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.symmetric( vertical: paddingv ?? 10, horizontal: paddingh ?? 10 ),
