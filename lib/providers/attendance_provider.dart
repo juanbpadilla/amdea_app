@@ -29,6 +29,7 @@ class AttendanceProvider extends ChangeNotifier {
   }
 
   Future<List<Attendance>?> showAttendances() async {    
+    print('Attendance Inicializado');
     isLoading = true;
     notifyListeners();
     final idToken = await storage.read(key: 'token');
@@ -41,8 +42,8 @@ class AttendanceProvider extends ChangeNotifier {
 
     if (resp.statusCode != 200) {
       print('error');
-      // isLoading = false;
-      // notifyListeners();
+      isLoading = false;
+      notifyListeners();
       return null;
     }
 

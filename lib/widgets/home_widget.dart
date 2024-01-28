@@ -1,5 +1,4 @@
 import 'package:amdea_app/pages/pages.dart';
-// import 'package:amdea_app/providers/attendance_provider.dart';
 import 'package:amdea_app/providers/login_form_provider.dart';
 import 'package:amdea_app/theme/app_theme.dart';
 import 'package:amdea_app/widgets/widgets.dart';
@@ -16,7 +15,7 @@ class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // final listAttendance = Provider.of<AttendanceProvider>(context);
+    // final listAttendance = Provider.of<AttendanceProvider>(context, listen: false);
     // final authProvider = Provider.of<LoginFormProvider>(context, listen: false);
 
     final double width = MediaQuery.of(context).size.width;
@@ -42,11 +41,11 @@ class HomeWidget extends StatelessWidget {
                 icon: 'check-square.svg',
                 routeName: () {
                   
-                  // await listAttendance.showAttendances(authProvider.user!.id ?? '');
+                  // await listAttendance.showAttendances();
                   // Navigator.pushNamed(context, 'attendance');
                   Navigator.push(
                     context, 
-                    MaterialPageRoute(builder: (context) => AttendancePage(authProvider: authProvider,)),
+                    MaterialPageRoute(builder: (context) => AttendancePage()),
                     // arguments: { 'authProvider': authProvider}
                   );
                 },

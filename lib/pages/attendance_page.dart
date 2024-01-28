@@ -1,7 +1,6 @@
 import 'package:amdea_app/models/attendance.dart';
-// import 'package:amdea_app/pages/pages.dart';
+import 'package:amdea_app/pages/loading_page.dart';
 import 'package:amdea_app/providers/attendance_provider.dart';
-import 'package:amdea_app/providers/login_form_provider.dart';
 import 'package:amdea_app/theme/app_theme.dart';
 import 'package:amdea_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -10,50 +9,61 @@ import 'package:provider/provider.dart';
 
 class AttendancePage extends StatelessWidget {
 
-  final LoginFormProvider authProvider;
-
-  const AttendancePage({super.key, required this.authProvider});
-
   @override
   Widget build(BuildContext context) {
 
-    // if( listAttendance.isLoading ) return LoadingPage();
+    final listAttendance = Provider.of<AttendanceProvider>(context);
+    
+    if( listAttendance.isLoading ) return const LoadingPage(color: AppTheme.greenColor,);
 
     final double width = MediaQuery.of(context).size.width;
-    // final double height = MediaQuery.of(context).size.height;
+    final double height = MediaQuery.of(context).size.height;
 
-    return Consumer<AttendanceProvider>(
-      builder: (context, listAttendance, _) {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: AppTheme.greenColor,
-            titleTextStyle: TextStyle(
-                fontFamily: AppTheme.mediumFont,
-                color: Theme.of(context).colorScheme.background,
-                fontSize: 25),
-            centerTitle: true,
-            title: const Text('Marcar Asistencia'),
-            iconTheme:
-                IconThemeData(color: Theme.of(context).colorScheme.background),
-            elevation: 0,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppTheme.greenColor,
+        titleTextStyle: TextStyle(
+            fontFamily: AppTheme.mediumFont,
+            color: Theme.of(context).colorScheme.background,
+            fontSize: 25),
+        centerTitle: true,
+        title: const Text('Marcar Asistencia'),
+        // iconTheme:
+        //     IconThemeData(color: Theme.of(context).colorScheme.background),
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.background,
           ),
-          body: Container(
+          onPressed: () async {
+            Navigator.pop(context);
+            await listAttendance.showAttendances();
+          },
+        ),
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async { 
+          await listAttendance.showAttendances();
+        },
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Container(
             width: double.infinity,
-            height: MediaQuery.of(context).size.height,
+            height: height,
             color: Theme.of(context).colorScheme.background,
             child: ListView.separated(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: listAttendance.attendances.length,
               itemBuilder: (context, int index) {
-
-                Attendance attendance;
+              
                 DateTime fechaActual = DateTime.now();
-                attendance = listAttendance.attendances[index];
+                Attendance attendance = listAttendance.attendances[index];
                 String fecha = '${attendance.lesson.fecha.year.toString()}-${attendance.lesson.fecha.month.toString().padLeft(2, '0')}-${attendance.lesson.fecha.day.toString().padLeft(2, '0')}';
                 DateTime horaInicio = DateTime.parse('$fecha ${attendance.lesson.inicio}');
                 DateTime horaFin = DateTime.parse('$fecha ${attendance.lesson.fin}');
                 final String asistencia = listAttendance.attendances[index].attended > 0 ? 'Presente' : 'Falta';
-
+              
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                   child: Column(
@@ -116,9 +126,9 @@ class AttendancePage extends StatelessWidget {
                 );
               }, separatorBuilder: (BuildContext context, int index) => Divider(color: Theme.of(context).colorScheme.primary, thickness: 0.5, height: 5, indent: 0, endIndent: 0),
             )
-          )
-        );
-      }
+          ),
+        ),
+      )
     );
   }
 

@@ -267,7 +267,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 leading: const _Icon('check-square.svg'),
                 width: width,
-                onPressed: () {}
+                onPressed: () {
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (context) => AttendancePage()),
+                    // arguments: { 'authProvider': authProvider}
+                  );
+                }
                 // onPressed: () => Get.to(()=> PaymentScreen())
               ),
               buildDrawerItem(
