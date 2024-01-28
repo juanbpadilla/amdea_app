@@ -1,4 +1,5 @@
 import 'package:amdea_app/pages/pages.dart';
+import 'package:amdea_app/providers/login_form_provider.dart';
 import 'package:amdea_app/providers/ui_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,8 @@ class _HomePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final authProvider = Provider.of<LoginFormProvider>(context);
+
     final uiProvider = Provider.of<UiProvider>(context);
 
     final currentIndex = uiProvider.selectedMenuOpt;
@@ -35,14 +38,14 @@ class _HomePageBody extends StatelessWidget {
       case 1:
         return LibrosWidget();
       case 2:
-        return HomeWidget();
+        return HomeWidget(authProvider: authProvider);
       case 3:
         return ActivityWidget();
       case 4:
         return ProfilePage();
 
       default:
-        return HomeWidget();
+        return HomeWidget(authProvider: authProvider);
     }
     
   }

@@ -1,5 +1,6 @@
 import 'package:amdea_app/pages/check_auth_page.dart';
 import 'package:amdea_app/pages/pages.dart';
+import 'package:amdea_app/providers/attendance_provider.dart';
 import 'package:amdea_app/providers/login_form_provider.dart';
 import 'package:amdea_app/providers/ui_provider.dart';
 import 'package:amdea_app/providers/update_form_provider.dart';
@@ -23,6 +24,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => ThemeProvider(isDarkmode: Preferences.isDarkmode)),
       ChangeNotifierProvider(create: (_) => UiProvider()),
       ChangeNotifierProvider(create: (_) => BookService()),
+      ChangeNotifierProvider(create: (_) => AttendanceProvider()),
       ChangeNotifierProvider(create: ( _ ) => AuthService()),
       ChangeNotifierProvider(create: ( _ ) => LoginFormProvider()),
       ChangeNotifierProvider(create: ( _ ) => UpdateFormProvider())
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
         'profile': (_) => ProfilePage(),
         // 'user': (_) => UserPage(),
         'activity': (_) => const ActivityWidget(),
-        'attendance': (_) => AttendancePage()
+        // 'attendance': (_) => AttendancePage()
       },
       scaffoldMessengerKey: NotificationsService.messengerKey,
       theme: Provider.of<ThemeProvider>(context).currentTheme,

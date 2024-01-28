@@ -40,15 +40,6 @@ class LibrosWidget extends StatelessWidget {
               ),
 
               const SizedBox( height: 40 ),
-
-              // Divider(
-              //   color: Theme.of(context).colorScheme.primary, // Puedes personalizar el color de la línea
-              //   thickness: 1, // Personaliza el grosor de la línea
-              //   height: 30, // Ajusta el espacio por encima de la línea
-              //   indent: 0, // Ajusta el margen izquierdo de la línea
-              //   endIndent: 0, // Ajusta el margen derecho de la línea
-                
-              // ),
               
               _ListBody(libroService: libroService,),
 

@@ -83,7 +83,7 @@ class Lesson {
     Map<String, dynamic> toMap() => {
         "id": id,
         "lesson": lesson,
-        "fecha": "${fecha.year.toString().padLeft(4, '0')}-${fecha.month.toString().padLeft(2, '0')}-${fecha.day.toString().padLeft(2, '0')}",
+        "fecha": "${fecha.day.toString().padLeft(2, '0')}/${fecha.month.toString().padLeft(2, '0')}/${fecha.year.toString()}",
         "inicio": inicio,
         "fin": fin,
         "course_id": courseId,

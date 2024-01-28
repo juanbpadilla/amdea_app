@@ -29,6 +29,12 @@ class LoginFormProvider extends ChangeNotifier {
   bool _isSaving = false;
   bool get isLoading => _isLoading;
   bool get isSaving => _isSaving;
+
+  LoginFormProvider() {
+    print('Login Form Provider Inicializado');
+
+    fetchUserDetails();
+  }
   
   set isLoading( bool value ) {
     _isLoading = value;

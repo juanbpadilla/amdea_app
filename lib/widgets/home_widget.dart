@@ -1,17 +1,23 @@
-import 'package:amdea_app/sercices/auth_service.dart';
+import 'package:amdea_app/pages/pages.dart';
+// import 'package:amdea_app/providers/attendance_provider.dart';
+import 'package:amdea_app/providers/login_form_provider.dart';
 import 'package:amdea_app/theme/app_theme.dart';
 import 'package:amdea_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 class HomeWidget extends StatelessWidget {
+  final LoginFormProvider authProvider;
   const HomeWidget({
-    super.key,
+    super.key, required this.authProvider,
   });
 
   @override
   Widget build(BuildContext context) {
+
+    // final listAttendance = Provider.of<AttendanceProvider>(context);
+    // final authProvider = Provider.of<LoginFormProvider>(context, listen: false);
 
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
@@ -34,12 +40,15 @@ class HomeWidget extends StatelessWidget {
               child: CustomButton(
                 text: 'Marcar Asistencia',
                 icon: 'check-square.svg',
-                routeName: () async {
-                  final authService = Provider.of<AuthService>(context, listen: false);
-
-                  await authService.showAttendances();
-
-                  // Navigator.pushNamed(context, 'attendance')
+                routeName: () {
+                  
+                  // await listAttendance.showAttendances(authProvider.user!.id ?? '');
+                  // Navigator.pushNamed(context, 'attendance');
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (context) => AttendancePage(authProvider: authProvider,)),
+                    // arguments: { 'authProvider': authProvider}
+                  );
                 },
                 color: AppTheme.greenColor,
                 paddingv: height * 0.012,
