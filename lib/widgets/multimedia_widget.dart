@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:amdea_app/sercices/topic_service.dart';
 import 'package:amdea_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 import 'background_widget.dart';
 
@@ -11,6 +15,8 @@ class MultimediaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final topicService = Provider.of<TopicService>(context);
 
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
@@ -23,7 +29,7 @@ class MultimediaWidget extends StatelessWidget {
           children: [
             const SizedBox( height: 50 ),
 
-            Image(image: AssetImage('assets/logo.png'), width: width * 0.55),
+            Image(image: const AssetImage('assets/logo.png'), width: width * 0.55),
 
             const SizedBox( height: 50 ),
               
@@ -39,82 +45,84 @@ class MultimediaWidget extends StatelessWidget {
     
             const SizedBox( height: 40 ),
     
-            _CardActivity(
+            _cardActivity(
               text1: 'CURSO DE TEORÍA',
               color: Theme.of(context).colorScheme.primary,
               textColor: Theme.of(context).colorScheme.background,
               iconText: 'fold_21',
+              onTap: () => Navigator.pushNamed(context, 'multimedia/video/conceptos'),
             ),
     
             const SizedBox( height: 15 ),
     
-            const _CardActivity(
+            _cardActivity(
               text1: 'CURSO DE PHOTOSHOP',
-              color: Color(0xFF001E36),
-              textColor: Color(0xFF30A8FF),
+              color: const Color(0xFF001E36),
+              textColor: const Color(0xFF30A8FF),
               iconText: 'ps_icon',
+              onTap: () =>
+                  Navigator.pushNamed(context, 'multimedia/video/photoshop'),
             ),
     
             const SizedBox( height: 15 ),
     
-            const _CardActivity(
+            _cardActivity(
               text1: 'CURSO DE ILUSTRATOR',
-              color: Color(0xFF330000),
-              textColor: Color(0xFFF89400),
+              color: const Color(0xFF330000),
+              textColor: const Color(0xFFF89400),
               iconText: 'Illustrator',
+              onTap: () async {
+                  // Navigator.pushNamed(context, 'multimedia/video/illustrator'),
+                final topics = await topicService.showtopics();
+                log('logintud: ${topics?.length}');
+                log('logintud service: ${topicService.topics.length}');
+              }
             )
           ],
         ),
       ),
     );
   }
-}
 
-class _CardActivity extends StatelessWidget {
-  
-    final String text1;
-    final Color color;
-    final Color textColor;
-    final String iconText;
-
-  const _CardActivity({
-    super.key, 
-    required this.text1, 
-    required this.color, 
-    required this.textColor, required this.iconText,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _cardActivity({
+    required String text1,
+    required Color color,
+    required Color textColor,
+    required String iconText,
+    Function()? onTap
+  }) {
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
-      child: Container(
-        // height: 400,
-        padding: const EdgeInsets.symmetric( vertical: 20, horizontal: 20 ),
-        width: double.infinity,
-        color: color,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              'assets/icons/$iconText.svg',
-              colorFilter: ColorFilter.mode(textColor, BlendMode.srcIn),
-              height: 30,
-            ),
-            const SizedBox(width: 5,),
-            Text(
-              text1,
-              style: TextStyle(
-                color: textColor,
-                fontFamily: AppTheme.boldFont,
-                fontSize: 18
+      child: TextButton(
+        onPressed: onTap,
+        child: Container(
+          // height: 400,
+          padding: const EdgeInsets.symmetric( vertical: 20, horizontal: 20 ),
+          width: double.infinity,
+          color: color,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/icons/$iconText.svg',
+                colorFilter: ColorFilter.mode(textColor, BlendMode.srcIn),
+                height: 30,
               ),
-            ),
-          ],
-        )
-
+              const SizedBox(width: 5,),
+              Text(
+                text1,
+                style: TextStyle(
+                  color: textColor,
+                  fontFamily: AppTheme.boldFont,
+                  fontSize: 18
+                ),
+              ),
+            ],
+          )
+          
+        ),
       ),
     );
   }

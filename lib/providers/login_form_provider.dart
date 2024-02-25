@@ -63,11 +63,11 @@ class LoginFormProvider extends ChangeNotifier {
     // print(_role);
   }
 
-  // void saveUserData(User newUser) {
-  //   print(user!.email == '' ? 'no email' : user!.email);
-  //   print(user!.phone == '' ? 'no phone' : user!.phone);
-  //   _user = newUser;
-  // }
+  void saveUserData(User newUser) {
+    print(user!.email == '' ? 'no email' : user!.email);
+    print(user!.phone == '' ? 'no phone' : user!.phone);
+    _user = newUser;
+  }
   
 
 }

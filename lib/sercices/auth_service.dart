@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:amdea_app/models/user.dart';
 import 'package:amdea_app/utils/app_constants.dart';
@@ -13,8 +14,8 @@ class AuthService extends ChangeNotifier {
 
   final storage = const FlutterSecureStorage();
 
-  Uri uri(_baseUrl, link) => Uri.http(_baseUrl, link);
-  // Uri uri(_baseUrl, link) => Uri.https(_baseUrl, link);
+  // Uri uri(_baseUrl, link) => Uri.http(_baseUrl, link);
+  Uri uri(_baseUrl, link) => Uri.https(_baseUrl, link);
 
   Future<String?> createUser(
     String name, String email, String password, String passwordConfirmation,
@@ -48,6 +49,7 @@ class AuthService extends ChangeNotifier {
     };
     final url = uri(_baseUrl, '/api/v1/login');
     final resp = await http.post(url, headers: { 'Accept': _accept }, body: authData);
+    log(resp.body);
     final Map<String, dynamic> decodedResp = json.decode( resp.body );
     if ( decodedResp.containsKey('plain-text-token') ) {
       await storage.write(key: 'token', value: decodedResp['plain-text-token']);
